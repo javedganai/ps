@@ -423,7 +423,8 @@
   box-shadow: -1px -1px 0px 1px rgba(255, 255, 255, 0.38), 1px 1px 0px 1px rgba(255, 255, 255, 1);
 }
 .min80 {
-  padding-top: 130px;
+  padding-top: 30px;
+  margin-top: 100px;
 }
 .scan_header {
   display: grid;
@@ -616,7 +617,7 @@
   text-decoration: none;
 }
 .circle_wrapper {
-  padding: 40px;
+  padding: 40px 20px; 
   background-color: #fff;
   border-radius: 70px;
 }
@@ -723,7 +724,18 @@
   display: inline-block;
   color: rgba(59, 59, 59, 1);
   font-size: 15px;
+  cursor: pointer;
 }
+.see-all:hover {
+  text-decoration: underline;
+}
+
+.d-grid-box {
+  display: grid;
+  grid-gap: 1.5rem;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+}
+
 
 @media (min-width: 768px) {
   .abs-tablet {
@@ -752,11 +764,21 @@
   .max70 {
     max-width: 100%;
   }
+  .min80 {
+    padding-top: 50px;
+  }
+  .d-md-grid-box {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    grid-gap: 1.5rem;
+  }
 }
 
 @media (min-width: 992px) {
   .bg_radius {
     padding: 90px 40px;
+  }
+  .d-md-grid-box {
+    grid-template-columns: repeat(3,minmax(0,1fr));
   }
 }
 
@@ -822,7 +844,10 @@
     font-size: 20px;
   }
   .min80 {
-    padding-top: 180px;
+    margin-top: 120px;
+  }
+  .circle_wrapper {
+    padding: 40px;
   }
 }
 /*NEW CSS*/
@@ -842,15 +867,8 @@
   align-items: center;
   justify-content: center;
   overflow: hidden; /* Ensures the image doesn’t go outside the circle */
+  margin: 0 auto;
 }
 .circle img {
-
   object-fit: contain; /* Ensures the image is fully visible without cropping */
-
-}
- /* Remove margin on screens smaller than 768px (typically mobile) */
- @media (max-width: 768px) {
-  .circle {
-    margin-left: 0; /* Remove left margin */
-  }
 }

@@ -1,4 +1,4 @@
-<section class="ov-hidden pb-5 bg-transparent position-relative section-1 new_sec min80"
+<section class="ov-hidden pb-5 bg-transparent position-relative section-1 min80"
   style=" background-image: url('../../assets/images/ban-new.jpg');background-size: cover;">
   <div class="right--overlay" style="background-image: url('../../assets/images/right-gradient.svg');"></div>
   <div class="bottom--overlay" style="background-image: url('../../assets/images/bottom-gradient.svg');"></div>
@@ -6,7 +6,7 @@
 
   <div class="container position-relative qr-code-container">
     <div class="row d-flex align-items-center">
-      <div class="col-md-5 ms-md-auto">
+      <div class="col-md-6 col-xl-5 ms-md-auto">
         <div class="form_box_controller ms-auto">
           <div class="scan_header">
             <span class="bg-white">
@@ -76,7 +76,7 @@
     </div>
     <div class="row justify-content-center mt-4 pt-2">
       <!-- Loop through lifestyleCategories to dynamically display them -->
-      <div class="col-6 col-md-4" *ngFor="let category of filteredCategories">
+      <div class="col-sm-6 col-md-4" *ngFor="let category of filteredCategories">
         <div class="text-center" (click)="navigateToLifestyle(category.id)" style="cursor: pointer;">
           <div class="min-h150">
             <div class="circle">
@@ -178,44 +178,36 @@
       <h3 class="theme_color scan-two text-center">Popular Comparisons</h3>
       <p class="lead_font lead-text mt-1 text-center">See what others are comparing</p>
       <div class="mt-4 mt-md-5 pt-4">
-        <div class="row gx-1 justify-content-center">
-          <div class="col-lg-4 col-md-6 col-sm-12 text-center mb-4 pb-3 pb-lg-0 mb-lg-0" *ngFor="let pair of pairs">
-            <div class="d-flex justify-content-center align-items-center" style="height: 100%;"
-              (click)="navigateToComparePage(pair.product1_id,pair.product2_id)">
-              <!-- Ensures content fills the section height -->
-              <!-- First product -->
-              <div class="col-5 p-0 mr-3">
-                <div class="card border custom-border-radius"
-                  style="height: 100%;">
-                  <!-- Fixed card height -->
-                  <div class="card-body text-center">
-                    <img [src]="pair.image1" class="img-fluid img_height" style="object-fit: cover; height: 160px;"
-                      alt="{{ pair.footer1 }}" />
-                  </div>
-                  <div class="card-footer text-center">
-                    {{ pair.footer1 }}
-                  </div>
+        <div class="row d-md-grid d-md-grid-box gx-1 justify-content-center">
+          <div class="d-grid-box text-center pb-3 pb-lg-0"
+            (click)="navigateToComparePage(pair.product1_id,pair.product2_id)" *ngFor="let pair of pairs">
+            <!-- Ensures content fills the section height -->
+            <!-- First product -->
+              <div class="card d-block p-0 col-12 border custom-border-radius">
+                <!-- Fixed card height -->
+                <div class="card-body text-center">
+                  <img [src]="pair.image1" class="img-fluid img_height" style="object-fit: cover; height: 160px;"
+                    alt="{{ pair.footer1 }}" />
+                </div>
+                <div class="card-footer text-center">
+                  {{ pair.footer1 }}
+                </div>
 
-                  <div class="vs-text-right position-absolute">
-                    <span class="card_vs mb-0 bg-warning">VS</span>
-                  </div>
+                <div class="vs-text-right position-absolute">
+                  <span class="card_vs mb-0 bg-warning">VS</span>
                 </div>
               </div>
-              <!-- Second product -->
-              <div class="col-5 p-0 ml-2">
-                <div class="card border custom-border-radius"
-                  style="height: 215px;">
-                  <!-- Fixed card height -->
-                  <div class="card-body text-center">
-                    <img [src]="pair.image2" class="img-fluid img_height" style="object-fit: cover; height: 160px;"
-                      alt="{{ pair.footer2 }}" />
-                  </div>
-                  <div class="card-footer text-center">
-                    {{ pair.footer2 }}
-                  </div>
+            <!-- Second product -->
+              <div class="card d-block p-0 col-12 border custom-border-radius">
+                <!-- Fixed card height -->
+                <div class="card-body text-center">
+                  <img [src]="pair.image2" class="img-fluid img_height" style="object-fit: cover; height: 160px;"
+                    alt="{{ pair.footer2 }}" />
+                </div>
+                <div class="card-footer text-center">
+                  {{ pair.footer2 }}
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </div>

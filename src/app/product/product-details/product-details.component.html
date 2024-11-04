@@ -1,0 +1,185 @@
+<section class="ov-hidden pb-5 bg-transparent position-relative search-section"
+  style="background-image: linear-gradient(to top, #ffe9da, #ffede1, #fff1e7, #fff5ee, #fff9f5); background-size: cover; padding-top: 150px;">
+  <div class="container-fluid pb-3">
+    <div class="row justify-content-center">
+      <div class="" *ngFor="let prod of product">
+        <div class="card bg-white border-0">
+          <div class="col-lg-12 row p-3">
+            <div class="col-lg-4">
+              <img [src]="s3url + prod.image" alt="Product Image" class="img-fluid p-5" style="" />
+            </div>
+            <div class="col-lg-8">
+              <div class="card-body d-flex m-0 p-0">
+                <div class="pt-3">
+                  <h5 class="card-title theme_color font-weight-bold">Brand - {{prod.brand.brand_name}}</h5>
+                  <p class="card-text text-muted">{{prod.product_name}}</p>
+                </div>
+                <div class="card-body d-flex justify-content-end align-items-end">
+                  <img
+                    [src]="prod.veg_nonveg_category === 'veg' ? 'assets/images/veg.png' : 'assets/images/non-veg.png'"
+                    class="type-image mr-3" alt="Product Type" style="width: 50px;">
+
+                  <span class="label mb-1"
+                    [ngClass]="{ 'badge-halal': prod.lifestyle_category_id == 1, 'badge-nonhalal': prod.lifestyle_category_id == 2 }">
+                    {{ prod.lifestyle_category_id == 1 ? 'Halaal' : 'Non-Halaal' }}</span>
+                </div>
+              </div>
+              <hr>
+              <div class="card-body m-0 p-0">
+                <h5 class="card-subtitle mb-2 theme-color2 font-weight-bold">Product Description</h5>
+                <p class="card-text">{{prod.description}}</p>
+              </div>
+              <div class="card-body m-0 p-0 pt-4">
+                <h5 class="card-subtitle mb-2 theme-color2 font-weight-bold">Food Category</h5>
+                <p class="card-text">{{prod.category}}</p>
+              </div>
+
+              <div class="card-body m-0 p-0 pt-4">
+                <h5 class="card-subtitle mb-2 theme-color2 font-weight-bold">Certification Detail</h5>
+                <p class="card-text">{{prod.description}}</p>
+              </div>
+              <div class="card-body m-0 p-0 pt-4 pb-4">
+                <h5 class="card-subtitle mb-2 theme-color2 font-weight-bold">Nutrition Information</h5>
+                <div class="row">
+                  <div class="col-sm-6 pt-3">
+                    <ng-container
+                      *ngFor="let nutrient of getNutrients(prod).slice(0, calculateMidpoint(getNutrients(prod).length)); let last = last">
+                      <div class="d-flex justify-content-between align-items-center"
+                        [ngClass]="{'remove-border-bottom': last}">
+                        <div class="d-flex">
+                          <div class="circle mr-2"></div>
+                          <p class="mb-1">{{ nutrient.name | titlecase }}:</p>
+                        </div>
+                        <p class="mb-1">{{ nutrient.value }}</p>
+                      </div>
+                      <hr class="vertical-line" *ngIf="!last">
+                    </ng-container>
+                  </div>
+                  <div class="col-sm-auto d-flex align-items-stretch pl-0 pr-0">
+                    <hr class="vertical-line-vertical m-0">
+                  </div>
+                  <div class="col-sm-5 pt-3">
+                    <ng-container
+                      *ngFor="let nutrient of getNutrients(prod).slice(calculateMidpoint(getNutrients(prod).length)); let last = last">
+                      <div class="d-flex justify-content-between align-items-center"
+                        [ngClass]="{'remove-border-bottom': last}">
+                        <div class="d-flex">
+                          <div class="circle mr-2"></div>
+                          <p class="mb-1">{{ nutrient.name | titlecase }}:</p>
+                        </div>
+                        <p class="mb-1 text-right">{{ nutrient.value }}</p>
+                      </div>
+                      <hr class="vertical-line" *ngIf="!last">
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="text-center">
+              <button class="btn btn-outline-dark">
+                <input type="checkbox">
+                Compare
+              </button>
+            </div> -->
+          </div>
+
+          <hr class="mt-5">
+          <div class="container pb-5">
+            <div class="row justify-content-center pt-3">
+              <!-- Rating message -->
+              <div *ngIf="ratingMessage" class="text-center text-success mt-3">
+                Thank you for rating! Your feedback is valued.
+              </div>
+              <div *ngIf="feedbackMessage" class="text-center text-success mt-3" role="alert">
+                {{ feedbackMessage }}
+              </div>
+              <div class="col-lg-5 col-md-8 col-sm-10">
+                <div class="card bg-white">
+                  <div class="card-body">
+                    <h5 class="card-title text-center pb-3">Rate Your Experience</h5>
+                    <div class="d-flex justify-content-center align-items-center stars-responsive">
+                      <div class="d-flex">
+                        <span class="fa fa-3x fa-star pr-3 star-icon" [class.text-warning]="star <= selectedStars"
+                          [class.text-muted]="star > selectedStars" *ngFor="let star of starsArray()"
+                          (click)="setRating(star)">
+                        </span>
+                      </div>
+                    </div>
+                    <div *ngIf="ratingLoading" class="text-center mt-3">
+                      <i class="fas fa-spinner fa-spin fa-2x text-primary"></i> <!-- Spinner for loading -->
+                    </div>
+                    <div class="text-center mt-3">
+                      <button type="button" class="btn btn-outline-dark" (click)="submitRating()">Submit Rating</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-5 col-md-8 col-sm-10">
+                <div class="card bg-white">
+                  <div class="card-body text-center">
+                    <h5 class="card-title text-center">Give Your Feedback</h5>
+                    <p class="card-text pt-3 pb-1">Let us know what we’re getting right and how we can improve your
+                      experience.
+                    </p>
+                    <button type="button" class="btn btn-outline-dark text-center pt-2 mt-3"
+                      (click)="openFeedbackModal()">Give Feedback</button> <!-- Open modal on click -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="container">
+          <div class="row justify-content-center">
+            <!-- Display the products -->
+            <div *ngFor="let product of similarproducts" class="col-lg-2 mb-4 pt-4">
+              <div class="card bg-white text-center border-0">
+                <img [src]="s3url + product.image" class="card-img-top mt-1" alt="Product Image" style="width:100px" />
+                <div class="card-body" style="padding: 5px;">
+                  <div class="row">
+                    <div class="card-body d-flex justify-content-center align-items-center m-0 p-0">
+                      <img
+                        [src]="product.veg_nonveg_category === 'veg' ? 'assets/images/veg.png' : 'assets/images/non-veg.png'"
+                        class="type-image mr-3" alt="Product Type" style="width: 32px" />
+                      <span class="label badge-halal mb-1">
+                        {{ product.lifestyle_category_name || 'Category' }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-2">
+                  <h5 class="text-center">{{ product.product_name }}</h5>
+                  <p class="text-center">{{ getDescriptionWithFallback(product.description)}}</p>
+                  <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
+                    <button class="btn mb-2" [ngClass]="getButtonClass(product)" [disabled]="getButtonDisabled()"
+                      (click)="navigateToComparePage()" style="font-size: 20px;">
+                      Compare
+                    </button>
+                    <input type="checkbox" id="custom-checkbox-{{ product.id }}" [checked]="isSelected(product)"
+                      (change)="toggleSelection(product)" style="display: none;" />
+
+                    <label for="custom-checkbox-{{ product.id }}" class="custom-checkbox-label"
+                      [class.selected]="isSelected(product)" style="display: inline-block; width: 24px; height: 24px;
+                              border-radius: 50%; border: 2px solid #333;
+                              background: #fff; text-align: center;
+                              line-height: 24px; cursor: pointer;">
+                      <span *ngIf="isSelected(product)" style="color: #333; font-weight: bold;">&#10003;</span>
+                    </label>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="isSimilarLoading" class="text-center my-4">
+            <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

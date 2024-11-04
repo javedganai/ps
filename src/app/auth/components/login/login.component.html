@@ -1,0 +1,156 @@
+<div class="modal-overlay" [ngClass]="{'show': showModal}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-0">
+        <img src="/assets/images/login_logo.png" alt="Logo" class="modal-logo">
+        <h2 class="modal-title theme_color pt-3"><b>{{ headerTitle }}</b></h2>
+        <small class="modal-title pt-1">{{ headerSubtitle }}</small>
+        <span class="close-icon" (click)="closeModal()">&times;</span>
+      </div>
+      <div class="modal-body pt-2">
+        <form [formGroup]="loginForm">
+          <!-- Login form -->
+          <ng-container *ngIf="showLoginLink && !showVerifyOtp && !showRegister">
+            <div class="form-group pt-2">
+              <div class="input-container">
+                <input formControlName="mobileLogin" type="text" class="form-control input-field" id="username"
+                  placeholder="Enter mobile">
+                <span class="input-icon"><i class="fa fa-phone" aria-hidden="true"></i></span>
+              </div>
+              <div
+                *ngIf="loginForm.get('mobileLogin')?.invalid && (loginForm.get('mobileLogin')?.dirty || loginForm.get('mobileLogin')?.touched)">
+                <div *ngIf="loginForm.get('mobileLogin')?.errors?.['required']" class="text-danger">Mobile is required
+                </div>
+                <div *ngIf="loginForm.get('mobileLogin')?.errors?.['invalidMobile']" class="text-danger">Please enter a
+                  valid mobile number</div>
+              </div>
+              <div *ngIf="loginErrorMessage && !showSignUpLink" class="text-danger pt-1">{{ loginErrorMessage }}</div>
+              <div *ngIf="showSignUpLink" class="text-center mt-2">
+                <small>You need to register first to log in.<strong class="cursor_point" (click)="switchToRegister()">
+                    Sign up now!</strong></small>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-success mt-3" [disabled]="!loginForm.get('mobileLogin')?.valid"
+              (click)="sendOtp()">Send
+              OTP</button>
+            <div class="text-center">
+              <div class="pt-2">
+                <small class="text">or continue with</small>
+              </div>
+              <ul class="social-icons mb-0 d-inline-block">
+                <li class="px-2"><a (click)="loginWithGoogle()"><img src="/assets/images/google_icon.png" alt="Google"
+                      style="max-width: 30px; max-height: 30px;cursor: pointer;"></a></li>
+                <li class="px-2"><a (click)="loginWithFacebook()"><img src="/assets/images/fb_icon.png" alt="Facebook"
+                      style="max-width: 30px; max-height: 30px;cursor: pointer;"></a></li>
+                <li class="px-2"><a (click)="loginWithInstagram()"><img src="/assets/images/instagram_Icon.png"
+                      alt="Instagram" style="max-width: 30px; max-height: 30px;cursor: pointer;"></a></li>
+              </ul>
+            </div>
+
+            <div class="register-text mt-3">
+              <span style="display: flex; justify-content: center;">
+                <small>Don't have an account? <strong class="cursor_point" (click)="switchToRegister()">
+                    Register</strong></small>
+              </span>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="showVerifyOtp && !showRegister">
+            <div *ngIf="otpSuccessMessage" class="text-success pb-1">{{ otpSuccessMessage }}</div>
+            <div class="otp-inputs">
+              <ng-container *ngFor="let index of [0, 1, 2, 3, 4, 5]; let i = index">
+                <input #otpInput (input)="onOtpInputChange($event, i)" type="text" class="otp-input" maxlength="1"
+                  [formControlName]="'otpLogin' + (i + 1)">
+              </ng-container>
+            </div>
+            <div *ngIf="otpErrorMessage" class="text-danger pt-1">{{ otpErrorMessage }}</div>
+            <button type="submit" class="btn btn-success mt-3" (click)="verifyOtp()"
+              [disabled]="!loginForm.valid">Verify OTP</button>
+          </ng-container>
+        </form>
+
+        <!-- Register form  -->
+        <form [formGroup]="registerForm" *ngIf="showRegister && !verifyRegister && !showLoginLink"
+          (ngSubmit)="register()">
+          <div class="form-group pt-2">
+            <div class="input-container">
+              <input type="text" class="form-control input-field" id="mobile" placeholder="Enter mobile"
+                formControlName="mobile">
+              <span class="input-icon"><i class="fa fa-phone" aria-hidden="true"></i></span>
+            </div>
+            <small class="text-danger">
+              {{ getMobileErrorMessage() }}
+            </small>
+          </div>
+          <small class="d-flex justify-content-center theme_color mt-2">or</small>
+          <div class="form-group pt-2">
+            <div class="input-container">
+              <input type="text" class="form-control input-field" id="email" placeholder="Enter email"
+                formControlName="email">
+              <span class="input-icon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+            </div>
+            <small class="text-danger"
+              *ngIf="registerForm.errors?.['requireOneField'] && (registerForm.dirty || registerForm.touched)">
+              Please enter either mobile or email
+            </small>
+          </div>
+          <div class="text-danger text-center">
+            {{ registrationError }}
+          </div>
+
+          <button type="submit" class="btn btn-success mt-3">Continue</button>
+
+          <div class="text-center">
+            <div class="pt-2">
+              <small class="text">or register with</small>
+            </div>
+            <ul class="social-icons mb-0 d-inline-block">
+              <li class="px-2"><a (click)="loginWithGoogle()"><img src="/assets/images/google_icon.png" alt="Google"
+                    style="max-width: 30px; max-height: 30px;cursor: pointer;"></a></li>
+              <li class="px-2"><a (click)="loginWithFacebook()"><img src="/assets/images/fb_icon.png" alt="Facebook"
+                    style="max-width: 30px; max-height: 30px;cursor: pointer;"></a></li>
+              <li class="px-2"><a (click)="loginWithInstagram()"><img src="/assets/images/instagram_Icon.png"
+                    alt="Instagram" style="max-width: 30px; max-height: 30px;cursor: pointer;"></a></li>
+            </ul>
+          </div>
+          <div class="register-text mt-3">
+            <span style="display: flex; justify-content: center;">
+              <small>Already have an account? <strong class="cursor_point" (click)="onlogin()"> Login</strong></small>
+            </span>
+          </div>
+        </form>
+
+
+        <form [formGroup]="otpForm" *ngIf="verifyRegister" (ngSubmit)="verifyRegisterOtp()">
+          <div class="form-group pt-2">
+            <span class="input-icon2"><i class="fa fa-lock" aria-hidden="true"></i></span>
+            <input type="text" class="form-control" id="otp" placeholder="Enter OTP" formControlName="otp">
+            <small class="text-danger" *ngIf="otpForm?.invalid && (otpForm.dirty || otpForm.touched)">
+              OTP is required
+            </small>
+          </div>
+          <div *ngIf="otpSuccessRegister" class="text-success pb-1">{{ otpSuccessRegister }}</div>
+          <button type="submit" class="btn btn-success mt-3">Verify</button>
+          <div class="text-center">
+            <div class="pt-2">
+              <small class="text">or register with</small>
+            </div>
+            <ul class="social-icons mb-0 d-inline-block">
+              <li class="px-2"><a (click)="loginWithGoogle()"><img src="/assets/images/google_icon.png" alt="Google"
+                    style="max-width: 30px; max-height: 30px;cursor: pointer;"></a></li>
+              <li class="px-2"><a (click)="loginWithFacebook()"><img src="/assets/images/fb_icon.png" alt="Facebook"
+                    style="max-width: 30px; max-height: 30px;cursor: pointer;"></a></li>
+              <li class="px-2"><a (click)="loginWithInstagram()"><img src="/assets/images/instagram_Icon.png"
+                    alt="Instagram" style="max-width: 30px; max-height: 30px;cursor: pointer;"></a></li>
+            </ul>
+          </div>
+          <div class="register-text mt-3">
+            <span style="display: flex; justify-content: center;">
+              <small>Didn't receive? <strong> Resend</strong></small>
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

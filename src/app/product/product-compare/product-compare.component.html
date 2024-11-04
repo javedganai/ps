@@ -1,0 +1,82 @@
+<section class="ov-hidden pb-5 bg-transparent position-relative search-section"
+  style="background-image: linear-gradient(to top, #ffe9da, #ffede1, #fff1e7, #fff5ee, #fff9f5); background-size: cover; padding-top: 150px;">
+  <div class="container-fluid pb-3">
+    <div class="row">
+      <div class="col-md-4">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+            <li class="breadcrumb-item"><a routerLink="/product">Products</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Dairy & Products</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="col-md-4 d-flex justify-content-center align-items-center">
+        <h2 class="theme_color font-weight-bold">Product Compare</h2>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid mt-4">
+    <div class="row justify-content-center">
+      <div class="col-11">
+        <div class="d-flex justify-content-center">
+          <div class="row">
+            <!-- Loop through each product -->
+            <div class="col mb-4" *ngFor="let product of products; let i = index">
+              <div class="card bg-transparent border-0">
+                <div class="d-flex justify-content-center align-items-center">
+                  <i class="fas fa-times cross-icon" (click)="removeProduct(product.id)" style="cursor: pointer;"></i>
+                  <div class="circle">
+                    <!-- Use product image -->
+                    <img [src]="s3url + product.image" alt="Product Image" style="width: 130px;">
+                  </div>
+                </div>
+
+                <div class="card-body d-flex justify-content-center align-items-center">
+                  <img
+                    [src]="product.veg_nonveg_category === 'veg' ? 'assets/images/veg.png' : 'assets/images/non-veg.png'"
+                    class="type-image mr-3" alt="Product Type" style="width: 32px;">
+
+                  <span class="label mb-1"
+                    [ngClass]="{ 'badge-halal': product.lifestyle_category_id == 1, 'badge-nonhalal': product.lifestyle_category_id == 2 }">
+                    {{ product.lifestyle_category_id == 1 ? 'Halaal' : 'Non-Halaal' }}</span>
+                </div>
+                <div class="card-body m-0 p-0">
+                  <!-- Display product name and brand -->
+                  <h6 class="text-center">{{ 'Brand - ' + product.brand.brand_name }}</h6>
+                  <button class="btn w-100 text-center"
+                    [ngStyle]="{'background-color': productColors[i], 'color': 'white'}">
+                    Product <br>
+                    <span class="brand-name">{{ product.product_name }}</span>
+                  </button>
+                  <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <!-- Display additional details -->
+                    <p class="text-center m-0 pt-2" style="width: 150px;">Product Description
+                    </p>
+                    <p class="text-center m-0 text-secondary" style="width: 200px;">{{ product.description }}</p>
+                  </div>
+
+                  <button class="btn w-100 text-center mt-2"
+                    [ngStyle]="{'background-color': productColors[i], 'color': 'white'}">
+                    Food Category <br>
+                    <span class="brand-name">{{ product.productCateogry.category_name }}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="container-fluid mt-4">
+    <div class="card">
+      <h4 class="text-center theme_color pt-3 font-weight-bold">Nutrition Information</h4>
+      <div class="card-body">
+        <div id="chart-container" style="width:100%; height:400px;"></div>
+      </div>
+    </div>
+  </div>
+
+</section>

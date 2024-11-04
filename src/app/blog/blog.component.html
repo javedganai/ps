@@ -1,0 +1,26 @@
+<section class="ov-hidden pb-5 bg-transparent position-relative search-section"
+  style="background-image: linear-gradient(to top, #ffe9da, #ffede1, #fff1e7, #fff5ee, #fff9f5); background-size: cover; padding-top: 150px;">
+  <div class="container-fluid pb-3">
+    <div class="row justify-content-center">
+      <ng-container *ngFor="let blog of blogs">
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 border-0" style="border-radius: 20px;">
+            <img [src]="s3Url+blog.image" class="card-img-top" alt="Blog Image">
+            <div class="card-body d-flex flex-column">
+              <p class="card-text text-muted">By Poorna Satya, {{ blog.created_at | date: 'd MMM, y' }}</p>
+              <h5 class="card-title">{{ blog.blog_name }}</h5>
+              <p class="card-text">{{ blog.description }}</p>
+              <div class="flex-grow-1"></div>
+              <div class="text-center">
+                <a (click)="viewBlogDetails(blog.id, blog.blog_name)" class="btn btn-outline-dark btn-read-more">
+                  <span class="mr-2">Read More</span>
+                  <i class="fas fa-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</section>

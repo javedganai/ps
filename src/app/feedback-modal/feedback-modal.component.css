@@ -1,0 +1,7 @@
+.btn-outline-dark.active {
+  background-color: black;
+  color: white;
+}
+::ng-deep .modal-content {
+  width: 500px !important;
+}

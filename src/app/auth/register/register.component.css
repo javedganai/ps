@@ -1,0 +1,51 @@
+.input-container {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  padding-right: 10px;
+  border-right: 1px solid #d5d5d5;
+}
+
+.form-control {
+  padding-left: 50px;
+  width: 100%;
+}
+
+.btn-outline-dark:hover {
+  background-color: #23272b;
+  color: #fff;
+  border-color: #23272b;
+}
+
+.selected {
+  background-color: #343a40;
+  color: #fff;
+  border-color: #343a40;
+}
+
+.close-icon {
+  position: absolute;
+  top: 40px;
+  font-size: 25px;
+  right: 28px;
+  cursor: pointer;
+}
+.input-container select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 16px;
+}
+
+.input-container select:focus {
+  outline: none;
+  border-color: #007bff;
+}

@@ -1,0 +1,53 @@
+<div class="card mx-auto">
+  <form (ngSubmit)="submitFeedback()" #feedbackForm="ngForm">
+    <div class="d-flex justify-content-between align-items-center px-3 py-2">
+      <img src="/assets/images/login_logo.png" class="img-fluid rounded-start" alt="logo" style="height: 80px;">
+      <h2 class="card-title mb-0">Your Feedback</h2>
+      <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+    </div>
+
+    <hr>
+
+    <div class="card-body">
+      <p class="card-title">We would like your feedback to improve our product.</p>
+
+      <!-- Category selection -->
+      <div class="row">
+        <div class="col-6 d-grid mx-auto">
+          <button class="btn btn-outline-dark" (click)="selectCategory('Suggestion')"
+            [class.active]="feedbackCategory === 'Suggestion'">
+            Suggestion
+          </button>
+        </div>
+        <div class="col-6 d-grid mx-auto">
+          <button class="btn btn-outline-dark" (click)="selectCategory('Issue')"
+            [class.active]="feedbackCategory === 'Issue'">
+            Something is not quite right
+          </button>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Feedback input -->
+      <textarea [(ngModel)]="feedbackText" name="feedbackText" class="form-control" rows="5"
+        placeholder="Write your feedback here..." required></textarea>
+
+      <!-- Validation message for empty feedback text -->
+      <div *ngIf="feedbackForm.submitted && !feedbackText.trim()">
+        <small class="text-danger">Please enter your feedback.</small>
+      </div>
+
+      <div class="d-grid col-md-3 mx-auto mt-3">
+        <button type="submit" class="btn btn-outline-dark" [disabled]="isSubmittingFeedback">
+          Send
+        </button>
+      </div>
+
+      <!-- Loader while submitting feedback -->
+      <div class="text-center mt-3" *ngIf="isSubmittingFeedback">
+        <i class="fa fa-spinner fa-spin"></i> Submitting...
+      </div>
+    </div>
+  </form>
+</div>

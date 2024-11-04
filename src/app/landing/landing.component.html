@@ -1,0 +1,329 @@
+<section class="ov-hidden pb-5 bg-transparent position-relative section-1 new_sec min80"
+  style=" background-image: url('../../assets/images/ban-new.jpg');background-size: cover;">
+  <div class="right--overlay" style="background-image: url('../../assets/images/right-gradient.svg');"></div>
+  <div class="bottom--overlay" style="background-image: url('../../assets/images/bottom-gradient.svg');"></div>
+  <!-- <div class="bg-overlay"></div> -->
+
+  <div class="container position-relative qr-code-container">
+    <div class="row d-flex align-items-center">
+      <div class="col-md-5 ms-md-auto">
+        <div class="form_box_controller ms-auto">
+          <div class="scan_header">
+            <span class="bg-white">
+              <img src="../../assets/images/qr_code.png" alt="qr_code">
+            </span>
+            <div>
+              <p class="scan_header-title">
+                Scan the QR Code
+              </p>
+              <p class="scan_header-text">
+                To download the app
+              </p>
+            </div>
+          </div>
+          <h1 class="scan-one mt-4">{{banner?.heading}}</h1>
+          <p class="scan-text mt-3">
+            Explore Comprehensive Nutrition, Ingredients and Comparisons for Every Product You Love
+          </p>
+          <div class="seacrh__box">
+            <input type="text" class="form-control form-control-lg custom-placeholder"
+              placeholder="Enter 3 or more word to search Products, Brands, or Categories" [formControl]="searchQuery"
+              (input)="onSearchInput()"/>
+            <i class="fas fa-search text-muted position-absolute search-icon"></i>
+            <span *ngIf="searchQuery.value?.trim() !== ''" class="position-absolute cross-button" (click)="clearSearch()">
+              &times;
+            </span>
+            <div class="search-results mt-2 position-absolute bg-white border rounded search-result" *ngIf="showAutosuggestions">
+              <ul class="list-group pl-2 pr-2">
+                <div class="text-center pt-2" *ngIf="loading">
+                  <i class="fas fa-spinner fa-spin fa-2x text-warning"></i>
+                </div>
+                <ul class="ps-3" *ngIf="!loading">
+                  <li *ngFor="let product of groupedSearchResults" class="pt-2 pb-2" (click)="selectSuggestion(product)">
+                    {{ product.search_key }}
+                  </li>
+                </ul>
+              </ul>
+              <div class="p-3 text-muted" *ngIf="!loading && getKeys(groupedSearchResults).length === 0">
+                No results found.
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between">
+            <a href="#" class="d-inline-block">
+              <img src="../../assets/images/playstore.png" alt="playstore" class="img-fluid">
+            </a>
+            <a href="#" class="d-inline-block">
+              <img src="../../assets/images/appstore.png" alt="appstore" class="img-fluid">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</section>
+
+<section class="color__gap"></section>
+
+<!-- Overlay section -->
+<section class="py-36 bg-white">
+  <div class="container text-center">
+    <div class="d-flex">
+      <h3 class="theme_color scan-two mx-auto">Search By Category</h3>
+      <a *ngIf="showSeeAll"class="see-all align-self-center" (click)="seeAllCategories()">See all</a>
+    </div>
+    <div class="row justify-content-center mt-4 pt-2">
+      <!-- Loop through lifestyleCategories to dynamically display them -->
+      <div class="col-6 col-md-4" *ngFor="let category of filteredCategories">
+        <div class="text-center" (click)="navigateToLifestyle(category.id)" style="cursor: pointer;">
+          <div class="min-h150">
+            <div class="circle">
+            <img [src]="s3Url + category.image" class="img-fluid" alt="{{ category.life_style_category_name }}"
+             />
+          </div>
+          </div>
+          <p class="text-center pt-3 text--label">{{ category.life_style_category_name }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="color__gap py100">
+  <div class="container text-center">
+    <h3 class="theme_color scan-two">Why Choose Poorna Satya?</h3>
+    <p class="lead_font lead-text">The Complete Truth</p>
+    <img src="../../assets/images/poorna-satya.png" alt="poorna-satya" class="img-fluid mt-4 mt-md-5">
+  </div>
+</section>
+
+<section class="color__gap darkbg position-relative">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7 pb-md-5">
+        <h3 class="theme_color scan-two text-white text-center text-md-start">How It Works</h3>
+        <ul class="list_style_work mt32">
+          <li>
+            <span class="list_style_work-number">
+              1
+            </span>
+            <div>
+              <h3 class="list_style_work-title">
+                Go to App Store / Google Play Store
+              </h3>
+              <!-- <p class="list_style_work-text">
+                Contrary to popular belief, Lorem Ipsum is not simply random text
+              </p> -->
+            </div>
+          </li>
+          <li>
+            <span class="list_style_work-number">
+              2
+            </span>
+            <div>
+              <h3 class="list_style_work-title">
+                Create your account
+              </h3>
+              <!-- <p class="list_style_work-text">
+                Contrary to popular belief, Lorem Ipsum is not simply random text
+              </p> -->
+            </div>
+          </li>
+          <li>
+            <span class="list_style_work-number">
+              3
+            </span>
+            <div>
+              <h3 class="list_style_work-title">
+                Start using Poorna Satya 
+              </h3>
+              <!-- <p class="list_style_work-text">
+                Lorem Ipsum is therefore always on Poorna Satya.
+              </p> -->
+            </div>
+          </li>
+        </ul>
+        <div class="mt-4 d-flex flex-column flex-md-row align-items-center">
+          <button class="download--btn me-3">
+            Download Now
+            <span>
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" class="ms-2">
+                <rect x="1.5" y="1.87109" width="25" height="25" rx="12.5" stroke="white" stroke-width="2"/>
+                <path d="M8.42579 15.9783L13.6829 20.8368C13.7829 20.9253 13.9008 20.9946 14.0298 21.0409C14.2858 21.1381 14.5729 21.1381 14.8289 21.0409C14.958 20.9946 15.0759 20.9253 15.1759 20.8368L20.433 15.9783C20.531 15.8877 20.6088 15.7801 20.6618 15.6617C20.7149 15.5433 20.7422 15.4165 20.7422 15.2883C20.7422 15.0296 20.631 14.7814 20.433 14.5984C20.235 14.4155 19.9665 14.3127 19.6865 14.3127C19.4065 14.3127 19.1379 14.4155 18.94 14.5984L15.4808 17.8051L15.4808 9.45808C15.4808 9.20036 15.37 8.9532 15.1728 8.77097C14.9757 8.58874 14.7082 8.48636 14.4294 8.48636C14.1505 8.48636 13.8831 8.58874 13.6859 8.77097C13.4887 8.9532 13.378 9.20036 13.378 9.45808L13.378 17.8051L9.9188 14.5984C9.82106 14.5074 9.70477 14.4351 9.57665 14.3857C9.44852 14.3364 9.3111 14.311 9.1723 14.311C9.0335 14.311 8.89607 14.3364 8.76795 14.3857C8.63982 14.4351 8.52353 14.5074 8.42579 14.5984C8.32724 14.6888 8.24902 14.7962 8.19564 14.9146C8.14226 15.0331 8.11478 15.1601 8.11478 15.2883C8.11478 15.4166 8.14226 15.5436 8.19564 15.662C8.24902 15.7805 8.32724 15.8879 8.42579 15.9783Z" fill="white"/>
+              </svg>                
+            </span>
+          </button>
+          <a href="#" class="link--btn mt-3 mt-md-0">
+            <svg width="36" height="37" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-1">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M18 36.8711C20.3638 36.8711 22.7044 36.4055 24.8883 35.5009C27.0722 34.5963 29.0565 33.2705 30.7279 31.599C32.3994 29.9276 33.7253 27.9433 34.6298 25.7594C35.5344 23.5755 36 21.2349 36 18.8711C36 16.5073 35.5344 14.1667 34.6298 11.9828C33.7253 9.79893 32.3994 7.81463 30.7279 6.14317C29.0565 4.47172 27.0722 3.14585 24.8883 2.24126C22.7044 1.33668 20.3638 0.871094 18 0.871094C13.2261 0.871094 8.64773 2.76752 5.27208 6.14317C1.89642 9.51883 0 14.0972 0 18.8711C0 23.645 1.89642 28.2234 5.27208 31.599C8.64773 34.9747 13.2261 36.8711 18 36.8711ZM15.566 10.8511L26.854 17.1231C27.1656 17.2964 27.4253 17.5498 27.6061 17.8571C27.7868 18.1645 27.8821 18.5145 27.8821 18.8711C27.8821 19.2277 27.7868 19.5777 27.6061 19.8851C27.4253 20.1924 27.1656 20.4458 26.854 20.6191L15.566 26.8911C15.2005 27.0943 14.7883 27.1984 14.3701 27.1932C13.952 27.188 13.5425 27.0736 13.1821 26.8614C12.8218 26.6492 12.5232 26.3466 12.3158 25.9834C12.1085 25.6203 11.9996 25.2093 12 24.7911V12.9511C11.9996 12.5329 12.1085 12.1219 12.3158 11.7588C12.5232 11.3956 12.8218 11.093 13.1821 10.8808C13.5425 10.6686 13.952 10.5542 14.3701 10.549C14.7883 10.5438 15.2005 10.6479 15.566 10.8511Z" fill="white"/>
+            </svg>
+            Watch Video              
+            <img src="../../assets/images/tick.png" alt="tick" class="ms-2">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="abs-tablet mt-4 mt-md-0">
+    <img src="../../assets/images/phone-with-hand.png" alt="phone-with-hand" class="img-fluid d-block mx-auto max70 ms-md-auto">
+  </div>
+</section>
+
+
+<section class="color__gap card_compare py100">
+  <div class="container">
+    <div class="circle_wrapper">
+      <h3 class="theme_color scan-two text-center">Popular Comparisons</h3>
+      <p class="lead_font lead-text mt-1 text-center">See what others are comparing</p>
+      <div class="mt-4 mt-md-5 pt-4">
+        <div class="row gx-1 justify-content-center">
+          <div class="col-lg-4 col-md-6 col-sm-12 text-center mb-4 pb-3 pb-lg-0 mb-lg-0" *ngFor="let pair of pairs">
+            <div class="d-flex justify-content-center align-items-center" style="height: 100%;"
+              (click)="navigateToComparePage(pair.product1_id,pair.product2_id)">
+              <!-- Ensures content fills the section height -->
+              <!-- First product -->
+              <div class="col-5 p-0 mr-3">
+                <div class="card border custom-border-radius"
+                  style="height: 100%;">
+                  <!-- Fixed card height -->
+                  <div class="card-body text-center">
+                    <img [src]="pair.image1" class="img-fluid img_height" style="object-fit: cover; height: 160px;"
+                      alt="{{ pair.footer1 }}" />
+                  </div>
+                  <div class="card-footer text-center">
+                    {{ pair.footer1 }}
+                  </div>
+
+                  <div class="vs-text-right position-absolute">
+                    <span class="card_vs mb-0 bg-warning">VS</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Second product -->
+              <div class="col-5 p-0 ml-2">
+                <div class="card border custom-border-radius"
+                  style="height: 215px;">
+                  <!-- Fixed card height -->
+                  <div class="card-body text-center">
+                    <img [src]="pair.image2" class="img-fluid img_height" style="object-fit: cover; height: 160px;"
+                      alt="{{ pair.footer2 }}" />
+                  </div>
+                  <div class="card-footer text-center">
+                    {{ pair.footer2 }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-4 pt-3">
+        <button class="download--btn me-3">
+          View All Comparison
+          <span class="ms-2">
+            <svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1.5" y="26" width="25" height="25" rx="12.5" transform="rotate(-90 1.5 26)" stroke="white" stroke-width="2"/>
+              <path d="M15.6067 19.0742L20.4652 13.8171C20.5537 13.7171 20.623 13.5992 20.6693 13.4702C20.7665 13.2142 20.7665 12.9271 20.6693 12.6711C20.623 12.542 20.5537 12.4241 20.4652 12.3241L15.6067 7.06703C15.5161 6.96899 15.4085 6.89123 15.2901 6.83817C15.1718 6.78512 15.0449 6.75781 14.9168 6.75781C14.658 6.75781 14.4098 6.86904 14.2268 7.06703C14.0439 7.26501 13.9411 7.53354 13.9411 7.81353C13.9411 8.09353 14.0439 8.36205 14.2268 8.56004L17.4335 12.0192L9.08649 12.0192C8.82878 12.0192 8.58162 12.13 8.39939 12.3272C8.21716 12.5243 8.11478 12.7918 8.11478 13.0706C8.11478 13.3495 8.21716 13.6169 8.39939 13.8141C8.58162 14.0113 8.82878 14.122 9.08649 14.122L17.4335 14.122L14.2268 17.5812C14.1358 17.6789 14.0635 17.7952 14.0141 17.9234C13.9648 18.0515 13.9394 18.1889 13.9394 18.3277C13.9394 18.4665 13.9648 18.6039 14.0141 18.7321C14.0635 18.8602 14.1358 18.9765 14.2268 19.0742C14.3172 19.1728 14.4247 19.251 14.5431 19.3044C14.6615 19.3577 14.7885 19.3852 14.9168 19.3852C15.045 19.3852 15.172 19.3577 15.2905 19.3044C15.4089 19.251 15.5163 19.1728 15.6067 19.0742Z" fill="white"/>
+            </svg>                             
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="color__gap pt-0 pb-md-0">
+  <div class="container">
+    <div class="w-xl-950">
+      <img src="../../assets/images/board-man.png" alt="board-man" class="mx-auto img-fluid d-none d-xl-block">
+      <div class="abs_manbox">
+        <h2 class="theme_color scan-two font-xl-50 text-center">Subscribe Now</h2>
+        <h2 class="theme_color scan-two text-center">Join the Food Revolution</h2>
+        <p class="scan-text dark-scan text-center">
+          Be part of the movement towards healthier living and informed choices. Ready to know what you're consuming like never before?<br/> <strong class="fw-bold">Start your journey now!</strong>
+        </p>
+        <img src="../../assets/images/arrow--down.png" alt="arrow--down" class="mt-4">
+        <div class="seacrh__box border__search mb-0">
+          <input type="text" class="form-control form-control-lg" placeholder="Email Address"
+            [formControl]="emailControl">
+            <div class="text-center mt-3">
+              <button class="download--btn" type="button" (click)="onSubscribe()" [disabled]="subsloading">
+                <span *ngIf="subsloading" class="fas fa-spinner fa-spin text-white pt-2" role="status"
+                  aria-hidden="true"></span>
+                Subscribe
+                <span class="ms-2">
+                  <svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="1.5" y="26" width="25" height="25" rx="12.5" transform="rotate(-90 1.5 26)" stroke="white" stroke-width="2"/>
+                    <path d="M15.6067 19.0742L20.4652 13.8171C20.5537 13.7171 20.623 13.5992 20.6693 13.4702C20.7665 13.2142 20.7665 12.9271 20.6693 12.6711C20.623 12.542 20.5537 12.4241 20.4652 12.3241L15.6067 7.06703C15.5161 6.96899 15.4085 6.89123 15.2901 6.83817C15.1718 6.78512 15.0449 6.75781 14.9168 6.75781C14.658 6.75781 14.4098 6.86904 14.2268 7.06703C14.0439 7.26501 13.9411 7.53354 13.9411 7.81353C13.9411 8.09353 14.0439 8.36205 14.2268 8.56004L17.4335 12.0192L9.08649 12.0192C8.82878 12.0192 8.58162 12.13 8.39939 12.3272C8.21716 12.5243 8.11478 12.7918 8.11478 13.0706C8.11478 13.3495 8.21716 13.6169 8.39939 13.8141C8.58162 14.0113 8.82878 14.122 9.08649 14.122L17.4335 14.122L14.2268 17.5812C14.1358 17.6789 14.0635 17.7952 14.0141 17.9234C13.9648 18.0515 13.9394 18.1889 13.9394 18.3277C13.9394 18.4665 13.9648 18.6039 14.0141 18.7321C14.0635 18.8602 14.1358 18.9765 14.2268 19.0742C14.3172 19.1728 14.4247 19.251 14.5431 19.3044C14.6615 19.3577 14.7885 19.3852 14.9168 19.3852C15.045 19.3852 15.172 19.3577 15.2905 19.3044C15.4089 19.251 15.5163 19.1728 15.6067 19.0742Z" fill="white"/>
+                  </svg>                             
+                </span>
+              </button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="color__gap bgdark">
+  <div class="container my-md-3">
+    <div class="row align-items-center">
+      <div class="col-md-6 text-center">
+        <img src="../../assets/images/user--pic.png" alt="user--pic" class="img-fluid">
+      </div>
+      <div class="col-md-6 mt-3 mt-md-0">
+        <div class="quote--box mx-auto ms-md-0">
+          <span class="quote--box--top">
+            <svg width="68" height="52" viewBox="0 0 68 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.0369 47.5174C2.10891 43.358 0 38.693 0 31.1308C0 17.8238 9.36997 5.89691 22.9959 0L26.4014 5.23916C13.6831 12.098 11.1967 20.9985 10.2051 26.6102C12.253 25.5533 14.934 25.1845 17.5616 25.4278C24.4413 26.0627 29.8642 31.6935 29.8642 38.693C29.8642 42.2222 28.4579 45.6069 25.9548 48.1025C23.4516 50.598 20.0566 52 16.5166 52C12.4247 52 8.51192 50.137 6.0369 47.5174ZM44.1727 47.5174C40.2447 43.358 38.1358 38.693 38.1358 31.1308C38.1358 17.8238 47.5058 5.89691 61.1317 0L64.5373 5.23916C51.819 12.098 49.3325 20.9985 48.341 26.6102C50.3889 25.5533 53.0698 25.1845 55.6974 25.4278C62.5771 26.0627 68 31.6935 68 38.693C68 42.2222 66.5938 45.6069 64.0906 48.1025C61.5874 50.598 58.1924 52 54.6525 52C50.5605 52 46.6478 50.137 44.1727 47.5174Z" fill="white"/>
+            </svg>              
+          </span>
+          <span class="quote--box--bottom">
+            <svg width="69" height="53" viewBox="0 0 69 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M62.1748 4.75839C66.0842 8.93524 68.1723 13.6096 68.1386 21.1718C68.0794 34.4786 58.6564 46.3637 45.0043 52.1998L41.6222 46.9456C54.3709 40.1435 56.8969 31.2541 57.9135 25.6468C55.8609 26.6947 53.1783 27.0515 50.5519 26.7965C43.6751 26.1309 38.2773 20.4761 38.3084 13.4766C38.3242 9.94743 39.7455 6.56904 42.2597 4.08466C44.774 1.60028 48.1752 0.213437 51.7151 0.229203C55.8071 0.247427 59.7115 2.12782 62.1748 4.75839ZM24.0393 4.58855C27.9488 8.7654 30.0369 13.4398 30.0032 21.0019C29.9439 34.3088 20.5209 46.1938 6.86886 52.03L3.4867 46.7757C16.2354 39.9736 18.7615 31.0843 19.778 25.477C17.7254 26.5248 15.0429 26.8817 12.4164 26.6266C5.53961 25.9611 0.141822 20.3062 0.172994 13.3068C0.188712 9.77759 1.61002 6.3992 4.12426 3.91482C6.6385 1.43044 10.0397 0.0435971 13.5797 0.0593627C17.6716 0.0775865 21.576 1.95798 24.0393 4.58855Z" fill="white"/>
+              </svg>              
+          </span>
+          <h2 class="quote--box--title">
+            "Healthy choices begin with Informed Minds"
+          </h2>
+          <p class="quote--box--text mt-2">
+            Kushagr Madan
+            <span class="quote--box--designation mt-1">
+              Founder 
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="color__gap py100">
+  <div class="container mt-md-4">
+    <div class="bg_radius" style="background-image: url('../../assets/images/hand-drawn-doodle-curved.png');background-repeat: no-repeat;background-position: bottom right;">
+      <div class="row">
+        <div class="col-md-6 col-xl-5">
+          <h3 class="theme_color scan-two text-white text-center text-md-start">Download Poorna Satya for Free on Apple and Play Store</h3>
+          <p class="scan-text">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+          </p>
+          <div class="d-flex flex-column flex-md-row align-items-center mt-4">
+            <a href="#" class="d-inline-block">
+              <img src="../../assets/images/playstore.png" alt="playstore" class="img-fluid">
+            </a>
+            <a href="#" class="d-inline-block mt-3 mt-md-0 ms-md-3">
+              <img src="../../assets/images/appstore.png" alt="appstore" class="img-fluid">
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="mt-3 mt-md-0 abs-img">
+        <img src="../../assets/images/product-img.png" alt="product" class="img-fluid">
+      </div>
+    </div>
+  </div>
+</section>

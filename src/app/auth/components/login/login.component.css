@@ -1,0 +1,214 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1); /* semi-transparent black overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* make the overlay fully opaque when modal is visible */
+}
+
+.modal-dialog {
+  background-image: linear-gradient(
+    to right bottom,
+    #28863c,
+    #3f8e3e,
+    #539640,
+    #659e42,
+    #77a645
+  ); /* Relative path to the image */
+  background-size: cover; /* Ensure the background image covers the entire modal content area */
+  background-position: center; /* Center the background image */
+  width: 80%; /* Set the initial width of the modal dialog */
+  max-width: 800px; /* Set a maximum width for the modal dialog */
+  padding-top: 60%; /* Set the height based on the aspect ratio (e.g., 4:3 aspect ratio would be 75%) */
+  position: relative; /* Ensure absolute positioning works relative to this element */
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+}
+
+.modal-content {
+  width: 60%; /* Set the initial width of the modal dialog */
+  max-width: 800px; /* Set a maximum width for the modal dialog */
+  position: relative; /* Ensure absolute positioning works relative to this element */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* White background color with 80% opacity */
+  padding: 20px;
+  border-radius: 50px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically */
+  align-items: center;
+}
+
+.modal-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  border: none !important;
+}
+
+.modal-logo {
+  width: 110px;
+}
+.input-container {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  padding-right: 10px;
+  border-right: 1px solid #d5d5d5;
+}
+
+.input-icon1 {
+  position: absolute;
+  left: 28px;
+  top: 32%;
+  z-index: 2;
+  padding-right: 10px;
+  border-right: 1px solid #d5d5d5;
+}
+
+.input-icon2 {
+  position: absolute;
+  left: 28px;
+  top: 9%;
+  z-index: 2;
+  padding-right: 10px;
+  border-right: 1px solid #d5d5d5;
+}
+
+.input-icon i {
+  color: #034053;
+}
+
+.form-control {
+  padding-left: 50px;
+  width: 300px;
+}
+
+.btn-success {
+  background-color: #5cb85c;
+  border-color: #5cb85c;
+  padding: 0.375rem 0.75rem;
+  color: #fff;
+  width: 100%;
+}
+
+.btn-success:hover {
+  background-color: #4cae4c;
+  border-color: #4cae4c;
+}
+
+.button-text {
+  text-align: center;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.horizontal-line {
+  border: 0;
+  border-top: 1px solid #fff;
+  flex: 1;
+  margin: 0 10px;
+}
+.social-icons {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.social-icons i {
+  font-size: 24px; /* Adjust icon size as needed */
+  margin: 0 10px; /* Adjust margin between icons as needed */
+}
+
+.modal-container {
+  background-color: #fff; /* White background color */
+}
+
+.otp-inputs {
+  display: flex;
+  justify-content: center;
+}
+
+.otp-input {
+  width: 40px; /* Adjust as needed */
+  height: 40px; /* Adjust as needed */
+  text-align: center;
+  margin: 0 5px; /* Adjust as needed */
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 16px; /* Adjust as needed */
+}
+
+/* Optional: Add focus styles */
+.otp-input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+.modal-content {
+  position: relative;
+}
+
+.close-icon {
+  position: absolute;
+  top: 9px;
+  font-size: 25px;
+  right: 28px;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .modal-content {
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 50px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  .form-control {
+    padding-left: 50px; /* Adjust the padding to make room for the icon */
+    width: 100%; /* Adjust the width as needed */
+  }
+
+  .otp-input {
+    width: 28px; /* Adjust as needed */
+    height: 28px; /* Adjust as needed */
+  }
+}
+.modal-title {
+  text-align: center;
+}

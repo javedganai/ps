@@ -1,0 +1,66 @@
+<footer class="pt-0" style="background-color: #fff; bottom: 0; width: 100%;">
+  <div *ngIf="isLoading" class="loader-container">
+    <div class="loader"></div>
+  </div>
+  <div class="container pt-0">
+    <div class="row p-4">
+      <div class="col-md-3 col-sm-6 text-center text-md-left mb-4 mb-md-0">
+        <div class="d-flex flex-column align-items-center align-items-md-start">
+          <div class="text-center mb-3">
+            <img src="/assets/images/login_logo.png" alt="Logo" class="mx-auto d-block" style="width: 150px;">
+          </div>
+          <div class="d-flex justify-content-center pb-3 mt-3">
+            <img src="/assets/images/mail_green.png" alt="Logo" style="width: 35px;height: 35px;">
+            <h5 class="email-id theme_color font-weight-bold ml-2 pt-1 cl-16"><u>info@poornasatya.com</u></h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
+        <h5 class="theme_color text-center text-md-start pop-font">Useful Links</h5>
+        <ul class="list-unstyled text-center text-md-start">
+          <li class="pb-3 pt-2" style="cursor: pointer;"><a (click)="navigateAndScroll('/')"
+              class="text-decoration-none text-secondary">Home</a>
+          </li>
+          <li class="pb-3" style="cursor: pointer;"><a (click)="navigateAndScroll('/blogs')"
+              class="text-decoration-none text-secondary">Blog</a>
+          </li>
+          <li class="pb-3" style="cursor: pointer;"><a (click)="navigateAndScroll('/about-us')"
+              class="text-decoration-none text-secondary">About</a></li>
+          <li class="pb-3" style="cursor: pointer;"><a (click)="navigateAndScroll('/productsData')"
+              class="text-decoration-none text-secondary">Products</a></li>
+          <li class="pb-3" style="cursor: pointer;"><a (click)="navigateAndScroll('/contactUs')"
+              class="text-decoration-none text-secondary">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
+        <h5 class="theme_color text-center text-md-start pop-font">Help Center</h5>
+        <ul class="list-unstyled text-center text-md-start">
+          <li class="pb-3 pt-2"><a href="#" class="text-decoration-none text-secondary">Q&A</a></li>
+          <li class="pb-3"><a href="#" class="text-decoration-none text-secondary">Privacy Policy</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-3 col-sm-6">
+        <h5 class="theme_color text-center text-md-start pop-font">Social Links</h5>
+        <ul class="social-icons pt-3 row maxw-300  justify-content-md-start">
+          <li *ngFor="let data of product" class="list-inline-item col-3 me-0 justify-content-center justify-content-md-start mb-1 col-sm-3"><a [href]="data.link" target="_blank"><img
+                [src]="s3url + data.image" alt="Social Media" class="social-icon"></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="copywrite--box">
+    <marquee behavior="scroll" direction="left" class="text-justify">
+        <b>Disclaimer:</b> All information displayed on this website/ app. has been
+        collated on the
+        basis of
+        information provided on the website of the manufacturer, reseller or the labelling of the product itself and
+        is for reference purpose only. While we at "True Lineage India Pvt. Ltd." take due care to ensure the accuracy
+        of information, we disclaim all legal liability in case any information is found to be incorrect due to
+        factors beyond our control.
+    </marquee>
+    <p><small class="text-muted">Copyright &copy; 2024. All Rights Reserved.</small></p>
+  </div>
+</footer>

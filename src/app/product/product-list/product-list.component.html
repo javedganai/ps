@@ -1,0 +1,291 @@
+<section class="ov-hidden pb-5 bg-transparent position-relative search-section"
+  style="background-image: linear-gradient(to top, #ffe9da, #ffede1, #fff1e7, #fff5ee, #fff9f5); background-size: cover; padding-top: 150px;">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-lg-5 col-md-7">
+        <div class="position-relative">
+          <!-- Search Input with Form Control -->
+          <input type="text" class="form-control form-control-lg custom-placeholder"
+            placeholder="Enter 3 or more word to search Products, Brands, or Categories" [formControl]="searchQuery"
+            (keydown)="onSearchEnter($event)" (input)="onSearchInput()" style="border-radius: 15px;" />
+
+          <!-- Search Icon -->
+          <i class="fas fa-search text-muted position-absolute"
+            style="right: 20px; top: 50%; transform: translateY(-50%); color: #5cb85c;"></i>
+
+          <!-- Cross Button to Clear Search -->
+          <span *ngIf="searchQuery.value?.trim() !== ''" class="position-absolute cross-button" (click)="clearSearch()"
+            style="top: 2px; right: 13px; font-size: 30px; cursor: pointer; margin-right: 30px;">
+            &times;
+          </span>
+
+          <!-- Autosuggestion Dropdown -->
+          <div class="search-results mt-2 position-absolute bg-white border rounded" style="z-index: 1; width: 100%;"
+            *ngIf="showAutosuggestions">
+            <ul class="list-group p-3">
+              <li>
+                <ul class="ps-3">
+                  <li *ngFor="let product of groupedSearchResults" class="pb-2" (click)="selectSuggestion(product)"
+                    style="cursor: pointer; list-style: circle;">
+                    {{ product.search_key }}
+                  </li>
+                </ul>
+              </li>
+            </ul>
+
+            <!-- No Results Found -->
+            <div class="p-3 text-muted" *ngIf="!loading && getKeys(groupedSearchResults).length === 0">
+              No results found.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="container-fluid ">
+    <button class="btn btn-outline-dark mb-3" type="button" (click)="toggleFilters()">
+      {{ showFilters ? 'Hide Filters' : 'Show Filters' }}
+    </button>
+    <div class="row">
+      <div class="col-md-3" *ngIf="showFilters">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex p-0 pb-2">
+              <h6 class="font-weight-bold">Product Categories</h6>
+              <span *ngIf=" isAnyFilterApplied()"
+                style="color: rgba(237, 36, 53, 0.849);font-size:14px;cursor:pointer;padding-left: 40px;"
+                (click)="clearAllFilters()">
+                Clear All
+              </span>
+              <!-- <i class="fas fa-search text-muted ml-auto pt-1" (click)="toggleFilterOptions()"
+                style="color: #5cb85c !important;"></i> -->
+            </div>
+            <ul class="list-unstyled category-list">
+              <li *ngFor="let category of categories; let i = index">
+                <div class="category-item pb-2 pt-2">
+                  <label class="checkbox-label">
+                    <input type="checkbox" [checked]="category.checked" class="hidden-checkbox"
+                      (click)="toggleCategory(category)" />
+                    <div class="custom-checkbox" [ngClass]="{ 'checked': category.checked }"></div>
+                    {{ category.label }}
+                  </label>
+                  <span class="icon" (click)="toggleSubcategories(category)">
+                    <i class="fas"
+                      [ngClass]="{'fa-plus': !category.showSubcategories, 'fa-minus': category.showSubcategories}"></i>
+                  </span>
+                </div>
+                <div class="subcategories-container pl-4">
+                  <ul class="list-unstyled subcategories" *ngIf="category.showSubcategories">
+                    <li *ngFor="let subcategory of category.productSubCategory">
+                      <label class="checkbox-label">
+                        <input type="checkbox" [checked]="subcategory.checked" class="mr-2"
+                          (click)="toggleSubcategory(category, subcategory)" />
+                        <p class="m-0 p-0">{{ subcategory.label }}</p>
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+
+            <div class="d-flex p-0 pb-2">
+              <h5>Filters</h5>
+              <i class="fa-solid fa-sliders text-muted ml-auto pt-1" (click)="toggleFilterOptions()"
+                style="color: #5cb85c !important;"></i>
+            </div>
+
+            <div class="mt-3">
+              <div class="d-flex">
+                <div (click)="toggleVegDropdown()" style="cursor: pointer;">Veg</div>
+                <i class="fa-solid" [ngClass]="{'fa-chevron-down': !showVegDropdown, 'fa-chevron-up': showVegDropdown}"
+                  (click)="toggleVegDropdown()" style="color: #5cb85c !important;margin-left: auto;"></i>
+              </div>
+
+              <div *ngIf="showVegDropdown" class="mt-2">
+                <!-- Dropdown content goes here for Veg -->
+                <ul>
+                  <li>
+                    <label class="checkbox-label">
+                      <input type="checkbox" [(ngModel)]="vegFilter.checked" class="hidden-checkbox"
+                        (change)="applyFilters()" />
+                      <div class="custom-checkbox" [ngClass]="{ 'checked': vegFilter.checked }"></div>
+                      Veg
+                    </label>
+                  </li>
+                  <li>
+                    <label class="checkbox-label">
+                      <input type="checkbox" [(ngModel)]="nonVegFilter.checked" class="hidden-checkbox"
+                        (change)="applyFilters()" />
+                      <div class="custom-checkbox" [ngClass]="{ 'checked': nonVegFilter.checked }"></div>
+                      Non-Veg
+                    </label>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+
+            <!-- Lifestyle Filter -->
+            <div class="mt-3">
+              <div class="d-flex">
+                <div (click)="toggleLifestyleDropdown()" style="cursor: pointer;">Lifestyles</div>
+                <i class="fa-solid"
+                  [ngClass]="{'fa-chevron-down': !showLifestyleDropdown, 'fa-chevron-up': showLifestyleDropdown}"
+                  (click)="toggleLifestyleDropdown()" style="color: #5cb85c !important;margin-left: auto;"></i>
+              </div>
+
+              <div *ngIf="showLifestyleDropdown" class="mt-2">
+                <!-- Dropdown content goes here for Lifestyles -->
+                <ul>
+                  <li *ngFor="let lifestyle of lifestyleFilters">
+                    <label class="checkbox-label">
+                      <input type="checkbox" [(ngModel)]="lifestyle.checked" class="hidden-checkbox"
+                        (change)="applyFilters()" />
+                      <div class="custom-checkbox" [ngClass]="{ 'checked': lifestyle.checked }"></div>
+                      {{ lifestyle.life_style_category_name }}
+                    </label>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Brand Filter -->
+            <div class="mt-3">
+              <div class="d-flex">
+                <div (click)="toggleBrandDropdown()" style="cursor: pointer;">Brands</div>
+                <i class="fa-solid"
+                  [ngClass]="{'fa-chevron-down': !showBrandDropdown, 'fa-chevron-up': showBrandDropdown}"
+                  (click)="toggleBrandDropdown()" style="color: #5cb85c !important;margin-left: auto;"></i>
+              </div>
+
+              <div *ngIf="showBrandDropdown" class="mt-2">
+                <!-- Dropdown content goes here for Brands -->
+                <ul>
+                  <li *ngFor="let brand of brandFilters">
+                    <label class="checkbox-label">
+                      <input type="checkbox" [(ngModel)]="brand.checked" class="hidden-checkbox"
+                        (change)="applyFilters()" />
+                      <div class="custom-checkbox" [ngClass]="{ 'checked': brand.checked }"></div>
+                      {{ brand.brand_name }}
+                    </label>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-{{ showFilters ? '9' : '12' }} row">
+        <div *ngIf="loading" class="loader-container">
+          <div class="wrapper">
+            <div class="loader"></div>
+            <div class="wording">
+              <div class="letter">L</div>
+              <div class="letter">o</div>
+              <div class="letter">a</div>
+              <div class="letter">d</div>
+              <div class="letter">i</div>
+              <div class="letter">n</div>
+              <div class="letter">g</div>
+              <div class="letter circle"></div>
+              <div class="letter circle"></div>
+              <div class="letter circle"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8 mx-auto align-items-center wrapper" *ngIf="noDataFound && !loading">
+          <div class="alert" role="alert">
+            No products found. Please try different filters or a different search term.
+          </div>
+        </div>
+        <!-- <div *ngIf="noDataFound">No data found</div> -->
+        <div class="col-md-{{ !showFilters ? '3' : '4' }} mb-4" *ngFor="let product of products">
+          <div class="card cardHeight" >
+            <div style="border-bottom-right-radius: 5px;
+            border-top-left-radius: 5px;
+            width: 80px;
+            background: red;
+            color: wheat;
+            font-size: 14px;
+            padding: 5px 10px;
+            margin: 5px;" *ngIf="isKeyPresent(product, 'promotion_type')">
+              {{ product.promotion_type }}
+             </div>
+            <div class="card-body d-flex justify-content-between align-items-start pb-2" style="min-height: 150px; ">
+              <!-- Set a minimum height to maintain consistency -->
+
+              <div>
+                <img
+                  [src]="product.veg_nonveg_catgory === 'veg' ? 'assets/images/veg.png' : 'assets/images/non-veg.png'"
+                  class="type-image" alt="Product Type" style="width: 32px;">
+              </div>
+
+              <div class="d-flex flex-column align-items-start pl-4" (click)="viewProductDetails(product.product_id,product.product_category_id)">
+                <ng-container>
+                  <img [src]="s3url + product.product_image" class="product-image" alt="Product Image"
+                    style="max-height: 150px; width: 100%; object-fit: cover;">
+                  <!-- Ensure consistent image behavior -->
+                </ng-container>
+              </div>
+
+              <div>
+                <span class="label ml-auto"
+                  [ngClass]="{ 'badge-halal': product.life_style_category_name === 'Halal', 'badge-nonhalal': product.life_style_category_name === 'Non-Halaal' }">
+                  {{ product.life_style_category_name }}
+                </span>
+              </div>
+            </div>
+            <div class="card-body d-flex flex-column align-items-center">
+              <h5 (click)="viewProductDetails(product.product_id,product.product_category_id)" class="card-title text-center">{{ product.product_name }}</h5> <!-- Centered Title -->
+
+              <p (click)="viewProductDetails(product.product_id,product.product_category_id)" class="card-text text-secondary text-center" [ngStyle]="{
+                'font-size': '13px',
+                'text-align': 'justify',
+                'white-space': 'pre-wrap',
+                'word-wrap': 'break-word',
+                'max-width':'250px',
+                'min-height':'70px'
+              }">
+                {{ getDescriptionWithFallback(product.product_description) }}
+
+                <!-- Always include the "Read more..." link -->
+                <span>
+                  <a class="text-dark" style="font-size: 13px; cursor: pointer;"
+                    (click)="viewProductDetails(product.product_id,product.product_category_id)">
+                    <u><b>Read more ...</b></u> <!-- Navigate to the product details -->
+                  </a>
+                </span>
+              </p>
+
+              <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
+
+                <button class="btn mb-2" [ngClass]="getButtonClass(product)" [disabled]="getButtonDisabled()"
+                  (click)="navigateToComparePage()" style="font-size: 20px;">
+                  Compare
+                </button>
+                <input type="checkbox" id="custom-checkbox-{{ product.product_id }}" [checked]="isSelected(product)"
+                  (change)="toggleSelection(product)" style="display: none;" />
+
+                <label for="custom-checkbox-{{ product.product_id }}" class="custom-checkbox-label"
+                  [class.selected]="isSelected(product)" style="display: inline-block; width: 24px; height: 24px;
+                              border-radius: 50%; border: 2px solid #333;
+                              background: #fff; text-align: center;
+                              line-height: 24px; cursor: pointer;">
+                  <span *ngIf="isSelected(product)" style="color: #333; font-weight: bold;">&#10003;</span>
+                </label>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>

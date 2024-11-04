@@ -1,0 +1,65 @@
+<section class="ov-hidden pb-5 bg-transparent position-relative search-section" style="padding-top: 130px;">
+  <div class="pb-3">
+    <div class="">
+      <div class="d-flex justify-content-center">
+        <div class="col-md-12 m-0 p-0">
+          <div class="card bg-color p-3 pl-5"
+            style="border-radius: revert;background-image: linear-gradient(to top, #ffe9da, #ffede1, #fff1e7, #fff5ee, #fff9f5); background-size: cover;">
+            <div class="col-md-12 text-center pt-3">
+              <h2>Contact Us</h2>
+              <p class="mini-desc">Have any questions or suggestions? Feel free to reach out to us!</p>
+            </div>
+            <div class="row p-4">
+              <div class="col-md-6 pt-3">
+                <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+                  <div class="form-group pb-3">
+                    <input type="text" class="form-control" placeholder="Full Name" formControlName="fullName"
+                      style="border-radius: 10px;">
+                    <div *ngIf="submitted && contactForm.controls?.['fullName']?.errors" class="text-danger">
+                      <div *ngIf="contactForm.controls?.['fullName']?.errors?.['required']">Full Name is required</div>
+                    </div>
+                  </div>
+                  <div class="form-group pb-3">
+                    <input type="email" class="form-control" placeholder="Email" formControlName="email"
+                      style="border-radius: 10px;">
+                    <div *ngIf="submitted && contactForm.controls?.['email']?.errors" class="text-danger">
+                      <div *ngIf="contactForm.controls?.['email']?.errors?.['required']">Email is required</div>
+                      <div *ngIf="contactForm.controls?.['email']?.errors?.['email']">Invalid email format</div>
+                    </div>
+                  </div>
+                  <div class="form-group pb-3">
+                    <input type="tel" class="form-control" placeholder="Mobile" formControlName="mobile"
+                      style="border-radius: 10px;">
+                    <div *ngIf="submitted && contactForm.controls?.['mobile']?.errors" class="text-danger">
+                      <div *ngIf="contactForm.controls?.['mobile']?.errors?.['required']">Mobile is required</div>
+                      <div *ngIf="contactForm.controls?.['mobile']?.errors?.['pattern']">Invalid mobile number</div>
+                    </div>
+                  </div>
+                  <div class="form-group pb-3">
+                    <textarea class="form-control" rows="4" placeholder="Message" formControlName="message"
+                      style="border-radius: 10px;"></textarea>
+                    <div *ngIf="submitted && contactForm.controls?.['message']?.errors" class="text-danger">
+                      <div *ngIf="contactForm.controls?.['message']?.errors?.['required']">Message is required</div>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-block"
+                    style="border-radius: 10px;background: #1B803A;" [disabled]="loading">
+                    <span *ngIf="loading" class="fas fa-spinner fa-spin fa-2x text-white" role="status"
+                      aria-hidden="true"></span>
+                    <span *ngIf="!loading">Submit</span>
+                  </button>
+                </form>
+              </div>
+              <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <div class="text-center">
+                  <i class="fas fa-envelope fa-3x mb-3 theme_color"></i>
+                  <h5 class="email-id theme_color font-weight-bold"><u> info@poornasatya.com</u></h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

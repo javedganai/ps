@@ -1,0 +1,74 @@
+.badge-halal {
+  background-color: #b60606;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+}
+.badge-nonhalal {
+  background-color: green;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+}
+
+.vertical-line-vertical {
+  border-left: 1px solid #000; /* Adjust color and thickness as needed */
+  height: 100%;
+}
+.vertical-line {
+  margin-top: 10px; /* Remove top margin */
+  margin-bottom: 10px; /* Remove bottom margin */
+}
+
+.vertical-line-vertical {
+  margin-top: auto; /* Align top */
+  margin-bottom: auto; /* Align bottom */
+}
+.circle {
+  margin-top: 4px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: black;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.label {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+.remove-border-bottom {
+  border-bottom: none;
+}
+
+.stars-responsive .star-icon {
+  font-size: 2rem; /* Default size */
+}
+
+@media (max-width: 576px) {
+  .stars-responsive .star-icon {
+    font-size: 1.5rem; /* Smaller size for mobile view */
+  }
+}
+
+.stars-responsive {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .stars-responsive {
+    flex-direction: row; /* Ensure stars are in a row */
+  }
+}

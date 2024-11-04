@@ -1,0 +1,58 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-body {
+  flex-grow: 1;
+}
+
+::ng-deep .carousel-indicators {
+  top: 430px !important;
+}
+
+.card-container {
+  display: flex;
+}
+
+.card {
+  flex: 1;
+  margin: 0 5px;
+}
+
+.ov-hidden {
+  min-height: 440px;
+}
+
+.bg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* Adjust overlay color and opacity as needed */
+  border-radius: 30px;
+  z-index: 1;
+}
+
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  color: white; /* Ensures text is visible over the dark overlay */
+}
+
+.section .container-fluid {
+  position: relative;
+  z-index: 2; /* Ensures content is above the overlay */
+}
+
+.text-white {
+  color: white;
+}

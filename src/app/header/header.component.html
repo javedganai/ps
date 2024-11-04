@@ -1,0 +1,66 @@
+<nav class="navbar cs-nav navbar-expand-md navbar-light fixed-top bg-white px-3" [class.scrolled]="isScrolled">
+  <div class="container">
+    <a class="navbar-brand logo--brand" href="#">
+      <img src="/assets/images/login_logo.png" alt="Logo" class="modal-logo img-fluid">
+    </a>
+    <div class="ml-auto">
+      <button class="navbar-toggler" type="button" (click)="toggleMenu()" aria-controls="navbarNav3"
+        aria-expanded="isMenuOpen" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" [ngClass]="{ show: isMenuOpen }" id="navbarNav3">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item active" (click)="closeMenu()">
+          <a class="nav-link" routerLink="/" routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">
+            Home
+          </a>
+        </li>
+        <li class="nav-item active" (click)="closeMenu()">
+          <a class="nav-link pl-xl-5" routerLink="/about-us" routerLinkActive="active">
+            About
+          </a>
+        </li>
+        <li class="nav-item active" (click)="closeMenu()">
+          <a class="nav-link pl-xl-5" routerLink="/blogs" routerLinkActive="active">
+            Blog
+          </a>
+        </li>
+        <li class="nav-item active" (click)="closeMenu()">
+          <a class="nav-link pl-xl-5" routerLink="/productsData" routerLinkActive="active">
+            Products
+          </a>
+        </li>
+        <li class="nav-item active" (click)="closeMenu()">
+          <a class="nav-link pl-xl-5" routerLink="/contactUs" routerLinkActive="active">
+            Contact Us
+          </a>
+        </li>
+      </ul>
+      <ng-container *ngIf="!isLoggedIn">
+        <button type="button" class="btn btn-outline-dark ml-md-3 pl-md-5 pr-md-5 ml-xl-5 success--btn"
+          (click)="openLoginModal()">
+          Sign In
+          <span class="icon-right"><i class="far fa-user"></i></span>
+        </button>
+      </ng-container>
+      <ng-container *ngIf="isLoggedIn">
+        <div class="dropdown">
+          <button class="btn btn-dark dropdown-toggle" type="button" id="userDropdown" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Welcome
+          </button>
+          <div class="dropdown-menu" aria-labelledby="userDropdown">
+            <a class="dropdown-item" (click)="openCreateProfileModal()">
+              Profile
+            </a>
+            <a class="dropdown-item" href="#" (click)="logout()">
+              Logout
+            </a>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</nav>

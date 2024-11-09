@@ -69,3 +69,37 @@
   font-weight: 600;
   background-color: #ffc300;
 }
+
+.data-graph-table th, .data-graph-table td {
+  background: transparent;
+  border-top: 0;
+  border-bottom: 1px solid rgba(59, 59, 59, 0.5);
+  font-size: 16px;
+  min-width: 150px;
+  padding: 16px;
+}
+
+.cl-warning {
+  color: rgba(236, 134, 3, 1);
+  font-weight: 500;
+}
+
+.cl-blue {
+  color: rgba(3, 64, 83, 1);
+  font-weight: 500;
+}
+
+.cl-success {
+  color: rgba(27, 128, 58, 1);
+  font-weight: 500;
+}
+
+.cl-yellow {
+  color: rgba(163, 118, 62, 1);
+  font-weight: 500;
+}
+
+.data-graph-table th[scope="row"], .data-graph-table th[scope="col"] {
+  color: rgba(100, 100, 100, 1);
+  font-weight: 500;
+}

@@ -103,3 +103,55 @@
   color: rgba(100, 100, 100, 1);
   font-weight: 500;
 }
+
+.clamp--two {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}
+
+.clamp--one {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.abs--icon-bottom {
+  position: absolute;
+  right: -16px;
+  bottom: 2px;
+}
+
+.font12 {
+  font-size: 14px;
+}
+
+.tooltip-txt .tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 10px;
+  line-height: 1.6;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: -70px;
+  font-size: 12px;
+}
+
+.tooltip-txt:hover .tooltiptext {
+  visibility: visible;
+}
+
+.tooltip-txt {
+  position: relative;
+}

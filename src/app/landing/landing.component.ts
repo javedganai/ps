@@ -327,6 +327,9 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/productsData'], { queryParams: { lifestyleId } });
   }
 
+  navigateToCategory(): void {
+    this.router.navigate(['/productsData']);
+  }
   onProductClick(productId: number): void {
     const userId = sessionStorage.getItem('userId');
     console.log(productId);

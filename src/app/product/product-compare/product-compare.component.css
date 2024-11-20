@@ -75,8 +75,10 @@
   border-top: 0;
   border-bottom: 1px solid rgba(59, 59, 59, 0.5);
   font-size: 16px;
-  min-width: 150px;
-  padding: 16px;
+  padding: 16px 12px;
+}
+.data-graph-table th {
+  min-width: 90px;
 }
 
 .cl-warning {
@@ -154,4 +156,24 @@
 
 .tooltip-txt {
   position: relative;
+}
+
+.card-container-box {
+  padding: 0 10px;
+}
+.card-container-box .card-body {
+  padding: 0px;
+}
+
+@media (min-width: 768px) {
+  .card-container-box {
+    padding: 20px 50px;
+  }
+  .card-container-box .card-body {
+    padding: 20px;
+  }
+  .data-graph-table th, .data-graph-table td {
+    min-width: 150px;
+    padding: 16px;
+  }
 }

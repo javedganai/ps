@@ -736,6 +736,30 @@
   grid-template-columns: repeat(2,minmax(0,1fr));
 }
 
+.search-result{
+  margin-left: 10%;
+  width: 83%;
+}
+
+.circle {
+  width: 140px; 
+  height: 140px;
+  margin-left: 30%;
+  background-color: rgba(255, 240, 229, 1);
+  border: 14px solid green; /* Green border */
+  border-radius: 50%; /* Makes the border circular */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Ensures the image doesn’t go outside the circle */
+  margin: 0 auto;
+}
+.circle img {
+  object-fit: contain; /* Ensures the image is fully visible without cropping */
+}
+.font-25 {
+  font-size: 22px;
+}
 
 @media (min-width: 768px) {
   .abs-tablet {
@@ -770,6 +794,14 @@
   .d-md-grid-box {
     grid-template-columns: repeat(2,minmax(0,1fr));
     grid-gap: 1.5rem;
+  }
+  .circle {
+    width: 170px;
+    height: 170px;
+    border-width: 20px;
+  }
+  .font-25 {
+    font-size: 22px;
   }
 }
 
@@ -851,24 +883,3 @@
   }
 }
 /*NEW CSS*/
-.search-result{
-  margin-left: 10%;
-  width: 83%;
-}
-
-.circle {
-  width: 170px; /* Fixed size for the circular container */
-  height: 170px;
-  margin-left: 30%;
-  background-color: rgba(255, 240, 229, 1);
-  border: 20px solid green; /* Green border */
-  border-radius: 50%; /* Makes the border circular */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden; /* Ensures the image doesn’t go outside the circle */
-  margin: 0 auto;
-}
-.circle img {
-  object-fit: contain; /* Ensures the image is fully visible without cropping */
-}

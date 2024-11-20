@@ -74,9 +74,9 @@
       <h3 class="theme_color scan-two mx-auto">Search By Category</h3>
       <a *ngIf="showSeeAll"class="see-all align-self-center" (click)="seeAllCategories()">See all</a>
     </div>
-    <div class="row justify-content-center mt-4 pt-2">
+    <div class="row justify-content-md-center mt-4 pt-2">
       <!-- Loop through lifestyleCategories to dynamically display them -->
-      <div class="col-sm-6 col-md-4" *ngFor="let category of filteredCategories">
+      <div class="col-sm-6 col-md-4 col-6 mb-3 mb-md-0" *ngFor="let category of filteredCategories">
         <div class="text-center" (click)="navigateToLifestyle(category.id)" style="cursor: pointer;">
           <div class="min-h150">
             <div class="circle">
@@ -84,7 +84,7 @@
              />
           </div>
           </div>
-          <p class="text-center pt-3 text--label">{{ category.life_style_category_name }}</p>
+          <p class="text-center pt-md-3 font-25 text--label">{{ category.life_style_category_name }}</p>
         </div>
       </div>
     </div>
@@ -267,7 +267,7 @@
       <div class="col-md-6 text-center">
         <img src="../../assets/images/user--pic.png" alt="user--pic" class="img-fluid">
       </div>
-      <div class="col-md-6 mt-3 mt-md-0">
+      <div class="col-md-6 mt-5 mb-3 mt-md-0 mb-md-0">
         <div class="quote--box mx-auto ms-md-0">
           <span class="quote--box--top">
             <svg width="68" height="52" viewBox="0 0 68 52" fill="none" xmlns="http://www.w3.org/2000/svg">

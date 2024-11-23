@@ -882,7 +882,6 @@
     padding: 40px;
   }
 }
-/*NEW CSS*/
 @media (max-width: 767px) {
   .xs--none {
     /* display: none; */
@@ -899,3 +898,5 @@
     backdrop-filter: none;
   }
 }
+
+/*NEW CSS*/

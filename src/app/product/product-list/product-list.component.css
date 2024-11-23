@@ -49,22 +49,6 @@
   margin-left: auto;
 }
 
-.badge-halal {
-  background-color: #b60606;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 10px;
-}
-
-.badge-nonhalal {
-  background-color: green;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 10px;
-}
-
 li {
   list-style: none;
 }
@@ -244,40 +228,49 @@ li {
     transform: translateY(-10px);
   }
 }
-
 .custom-checkbox-label {
   display: inline-block;
   width: 24px;
   height: 24px;
   border: 2px solid #333;
-  border-radius: 50%; /* Circular shape */
-  background: #fff; /* Default background */
+  border-radius: 50%;
+  background: #fff;
   text-align: center;
-  line-height: 24px; /* Center the checkmark vertically */
+  line-height: 24px;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .custom-checkbox-label.selected {
-  background: #00ff00; /* Green background when checked */
+  background: #00ff00;
 }
 
 .custom-checkbox-label:hover {
-  background: #f0f0f0; /* Optional hover effect */
+  background: #f0f0f0;
 }
 
 .custom-button-selected {
-  background-color: #1b803a; /* Desired button color when selected */
+  background-color: #1b803a;
   border: none;
   color: white;
 }
 
 .custom-button-default {
-  background-color: #f0f0f0; /* Default color */
+  background-color: #f0f0f0;
   border: none;
   color: black;
 }
 
 .custom-button:hover {
-  opacity: 0.8; /* Optional hover effect */
+  opacity: 0.8;
 }
+
+.label {
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  margin-top: 5px;
+  color: white;
+  background: #fca420;
+}
+

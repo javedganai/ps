@@ -33,9 +33,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.sharedService.isLoggedIn$.subscribe(
       ({ isLoggedIn, token, userId }) => {
-        console.log('Is logged in register:', isLoggedIn);
-        console.log('Token register:', token);
-        console.log('User ID:', userId);
         this.isLoggedIn = isLoggedIn;
         this.token = token;
         this.userId = userId;
@@ -67,8 +64,8 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('userId');
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
     this.sharedService.setLoggedInStatus(false);
     this.sharedService.userId$.next(null);
   }

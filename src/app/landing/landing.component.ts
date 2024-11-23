@@ -89,7 +89,6 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.geolocationService.getLocation().subscribe(
       (location) => {
         this.location = location; // Store the location with resolved address
-        console.log('Location:', location); // Output the resolved location
       },
       (error) => {
         console.error('Error fetching location:', error);
@@ -129,7 +128,6 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
   seeAllCategories():void{
     this.filteredCategories = this.lifestyleCategories;
     this.showSeeAll = false;
-    console.log('the catef', this.filteredCategories)
   }
 
   fetchAutosuggestions(searchTerm: string): void {
@@ -274,15 +272,14 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
       next: (res) => {
         if (res.status === 200 && res.data) {
           this.pairs = res.data.map((item: any, index: number) => {
-            console.log('items', item);
             return {
               product1_id: item.product_id_1,
               product2_id: item.product_id_2,
-              image1: `${this.s3Url}${item.product1_image}`, // Image for the first product
-              image2: `${this.s3Url}${item.product2_image}`, // Image for the second product
-              footer1: item.product1_product_name, // Footer text for the first product
-              footer2: item.product2_product_name, // Footer text for the second product
-              color: this.generateRandomColor(index), // Get a color from the palette
+              image1: `${this.s3Url}${item.product1_image}`,
+              image2: `${this.s3Url}${item.product2_image}`,
+              footer1: item.product1_product_name,
+              footer2: item.product2_product_name,
+              color: this.generateRandomColor(index),
             };
           });
         } else {
@@ -331,17 +328,16 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/productsData']);
   }
   onProductClick(productId: number): void {
-    const userId = sessionStorage.getItem('userId');
-    console.log(productId);
+    const userId = localStorage.getItem('userId');
     if (userId) {
-      this.router.navigate(['/productDetails', productId]); // Navigate to product details
+      this.router.navigate(['/productDetails', productId]);
     } else {
-      this.toastr.warning('Please log in to view product details.'); // Show warning if not logged in
+      this.toastr.warning('Please log in to view product details.');
     }
   }
 
   navigateToComparePage(productId1: any, productId2: any): void {
-    const userId = sessionStorage.getItem('userId');
+    const userId = localStorage.getItem('userId');
     const productIds: any = [];
     productIds.push(productId1);
     productIds.push(productId2);

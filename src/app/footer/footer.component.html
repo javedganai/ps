@@ -4,8 +4,8 @@
   </div>
   <div class="container pt-0">
     <div class="row p-4">
-      <div class="col-md-3 col-sm-6 text-center text-md-left mb-4 mb-md-0">
-        <div class="d-flex flex-column align-items-center align-items-md-start">
+      <div class="col-md-3 col-sm-6 text-md-left mb-4 mb-md-0">
+        <div class="d-flex flex-column align-items-start">
           <div class="text-center mb-3">
             <img src="/assets/images/login_logo.png" alt="Logo" class="mx-auto d-block" style="width: 150px;">
           </div>
@@ -16,9 +16,9 @@
         </div>
       </div>
 
-      <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
-        <h5 class="theme_color text-center text-md-start pop-font">Useful Links</h5>
-        <ul class="list-unstyled text-center text-md-start">
+      <div class="col-md-3 col-sm-6 col-6 mb-4 mb-md-0">
+        <h5 class="theme_color text-md-start pop-font">Useful Links</h5>
+        <ul class="list-unstyled text-md-start">
           <li class="pb-3 pt-2" style="cursor: pointer;"><a (click)="navigateAndScroll('/')"
               class="text-decoration-none text-secondary">Home</a>
           </li>
@@ -34,16 +34,16 @@
         </ul>
       </div>
 
-      <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
-        <h5 class="theme_color text-center text-md-start pop-font">Help Center</h5>
-        <ul class="list-unstyled text-center text-md-start">
+      <div class="col-md-3 col-sm-6 col-6 mb-4 mb-md-0">
+        <h5 class="theme_color text-md-start pop-font">Help Center</h5>
+        <ul class="list-unstyled text-md-start">
           <li class="pb-3 pt-2"><a href="#" class="text-decoration-none text-secondary">Q&A</a></li>
           <li class="pb-3"><a href="#" class="text-decoration-none text-secondary">Privacy Policy</a></li>
         </ul>
       </div>
 
-      <div class="col-md-3 col-sm-6">
-        <h5 class="theme_color text-center text-md-start pop-font">Social Links</h5>
+      <div class="col-md-3 col-6">
+        <h5 class="theme_color text-md-start pop-font">Social Links</h5>
         <ul class="social-icons pt-3 row maxw-300  justify-content-md-start">
           <li *ngFor="let data of product" class="list-inline-item col-3 me-0 justify-content-center justify-content-md-start mb-1 col-sm-3"><a [href]="data.link" target="_blank"><img
                 [src]="s3url + data.image" alt="Social Media" class="social-icon"></a></li>

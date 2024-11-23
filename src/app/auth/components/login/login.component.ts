@@ -245,22 +245,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // handleGoogleLogin(user: any) {
-  //   console.log('Google user:', user);
-
-  //   this.authService.loginWithGoogle(user).subscribe(
-  //     (response) => {
-  //       console.log('Google login successful:', response);
-  //       this.sharedService.setLoggedInStatus(true);
-  //       // Handle successful login, e.g., navigate to a different page, set tokens, etc.
-  //     },
-  //     (error) => {
-  //       console.error('Google login error:', error);
-  //       // Handle login error
-  //     }
-  //   );
-  // }
-
   initForm() {
     this.otpForm = this.formBuilder.group({
       otp: ['', Validators.required],
@@ -290,7 +274,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
       const mobileNumber = this.loginForm.get('mobileLogin')?.value;
       this.authService.sendOtp(mobileNumber).subscribe({
         next: (response: any) => {
-          console.log('OTP sent successfully:', response);
           this.showVerifyOtp = true;
           this.switchToOTPVerification();
           this.otpSuccessMessage = response.message;
@@ -348,10 +331,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
       const mobileNumber = this.loginForm.get('mobileLogin')?.value;
       this.authService.verifyOtp(mobileNumber, otp).subscribe({
         next: (response: any) => {
-          console.log('OTP verified successfully:', response);
 
-          sessionStorage.setItem('token', response.data.token.token);
-          sessionStorage.setItem('userId', response.data.userId);
+          // sessionStorage.setItem('token', response.data.token.token);
+          // sessionStorage.setItem('userId', response.data.userId);
+          localStorage.setItem('token', response.data.token.token);
+          localStorage.setItem('userId', response.data.userId);
           this.sharedService.setLoggedInStatus(true);
           this.modalRef.hide();
         },
@@ -391,7 +375,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
       this.authService.registerUser(mobileNumber).subscribe({
         next: (response) => {
-          console.log('Registration successful:', response);
           this.switchToRegisterVerification();
           this.verifyRegister = true;
           this.otpSuccessRegister = response.message;
@@ -418,8 +401,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
       const otp = this.otpForm.get('otp')?.value;
       this.authService.verifyRegister(mobileNumber, email, otp).subscribe({
         next: (response) => {
-          sessionStorage.setItem('token', response.data.token);
-          sessionStorage.setItem('userId', response.data.id);
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('userId', response.data.id);
           this.sharedService.setLoggedInStatus(true);
           this.openCreateProfileModal();
           // Handle success
@@ -436,7 +419,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
         },
       });
     } else {
-      console.log('enter');
       this.otpForm.markAllAsTouched();
     }
   }

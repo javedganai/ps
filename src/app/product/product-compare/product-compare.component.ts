@@ -36,7 +36,7 @@ export class ProductCompareComponent implements OnInit {
 
   fetchProductComparison(): void {
     this.loaderService.showLoader();
-    const userId: any = sessionStorage.getItem('userId');
+    const userId: any = localStorage.getItem('userId');
     this.sharedService.getProductComparison(userId, this.productIds).subscribe(
       (response: any) => {
         if (response.status === 200 && response.data) {
@@ -45,8 +45,7 @@ export class ProductCompareComponent implements OnInit {
             (_: any, index: number) =>
               COLOR_PALETTE[index % COLOR_PALETTE.length]
           );
-          console.log(this.products);
-          this.renderChart(); // Call renderChart() inside the subscription
+          this.renderChart();
           this.loaderService.hideLoader();
         } else {
           console.error('Error fetching product comparison:', response.message);
@@ -61,13 +60,10 @@ export class ProductCompareComponent implements OnInit {
   }
 
   renderChart(): void {
-    console.log(this.products);
     if (!this.products || this.products.length === 0) {
       console.error('No product data available.');
       return;
     }
-
-    // Extracting categories dynamically from the first product data
     const productData = this.products[0];
 
     const categories = Object.keys(productData).filter((key) => {

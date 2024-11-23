@@ -32,7 +32,6 @@ export class FooterComponent implements OnInit {
     this.sharedService.getSocialMediaLink().subscribe({
       next: (response: any) => {
         if (response.status === 200) {
-          console.log('footer api data', response.data);
           this.product = response.data;
         } else {
           console.error('Error fetching product details:', response.message);

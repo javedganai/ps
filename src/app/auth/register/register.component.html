@@ -185,7 +185,10 @@
           <div *ngIf="errorMessages" class="mt-3 text-danger text-center">{{ errorMessages }}</div>
           <div *ngIf="successMessage" class="mt-3 text-success text-center">{{ successMessage }}</div>
           <div class="text-center mt-2">
-            <button class="btn btn-success mt-4 pl-5 pr-5">Complete Profile</button>
+            <button class="btn btn-success mt-4 pl-5 pr-5" [disabled]="isLoading">
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              <span *ngIf="!isLoading">Complete Profile</span>
+            </button>
           </div>
         </div>
       </form>

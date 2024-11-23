@@ -16,13 +16,13 @@
       </div>
     </div>
   </div>
-  <div class="container-fluid mt-4">
+  <div class="container-fluid box--fluid mt-4">
     <div class="row justify-content-center">
-      <div class="col-11">
+      <div class="col-12 col-md-11">
         <div class="d-flex justify-content-center">
           <div class="row">
             <!-- Loop through each product -->
-            <div class="col mb-4" *ngFor="let product of products; let i = index">
+            <div class="col col-xs-6 mb-4" *ngFor="let product of products; let i = index">
               <div class="card bg-transparent border-0">
                 <div class="d-flex justify-content-center align-items-center">
                   <i class="fas fa-times cross-icon" (click)="removeProduct(product.id)" style="cursor: pointer;"></i>
@@ -32,14 +32,13 @@
                   </div>
                 </div>
 
-                <div class="card-body d-flex justify-content-center align-items-center">
+                <div class="card-body d-flex justify-content-center align-items-center ">
                   <img
                     [src]="product.veg_nonveg_category === 'veg' ? 'assets/images/veg.png' : 'assets/images/non-veg.png'"
                     class="type-image mr-3" alt="Product Type" style="width: 32px;">
 
-                  <span class="label mb-1"
-                    [ngClass]="{ 'badge-halal': product.lifestyle_category_id == 1, 'badge-nonhalal': product.lifestyle_category_id == 2 }">
-                    {{ product.lifestyle_category_id == 1 ? 'Halaal' : 'Non-Halaal' }}</span>
+                  <span class="label mb-1">
+                    {{ product.lifeStyleCategory.life_style_category_name}}</span>
                 </div>
                 <div class="card-body m-0 p-0">
                   <!-- Display product name and brand -->
@@ -49,12 +48,13 @@
                     Product <br>
                     <span class="brand-name clamp--one">{{ product.product_name }}</span>
                   </button>
-                  <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                  <div class="card-body d-flex flex-column justify-content-center align-items-center card-item">
                     <!-- Display additional details -->
-                    <p class="text-center m-0 pt-2" style="width: 150px;">Product Description
+                    <p class="text-center m-0 pt-2 xs-auto" style="width: 150px;">Product Description
                     </p>
                     <div class="position-relative">
-                      <p class="text-center m-0 text-secondary clamp--two" style="width: 200px;">{{ product.description }}</p>
+                      <p class="text-center m-0 text-secondary clamp--two xs-auto" style="width: 200px;">{{ product.description
+                        }}</p>
                       <div class="text-center mt-1 font12">
                         <span class="d-inline tooltip-txt position-relative cursor-pointer">
                           <!-- <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 24 24" fill="none">
@@ -62,7 +62,7 @@
                             <circle cx="1" cy="1" r="1" transform="matrix(1 0 0 -1 11 9)" fill="#1C274C"/>
                             <path d="M7 3.33782C8.47087 2.48697 10.1786 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 10.1786 2.48697 8.47087 3.33782 7" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
                           </svg> -->
-                          More info
+                          <span *ngIf="product.description.length > 48">More info</span>
                           <span class="tooltiptext">{{ product.description }}</span>
                         </span>
                       </div>
@@ -83,53 +83,76 @@
 
     </div>
   </div>
-  <div class="container-fluid mt-4">
+  <div class="card-container-box">
     <div class="card">
-      <h4 class="text-center theme_color pt-3 font-weight-bold">Nutrition Information</h4>
-      <div class="card-body">
-        <div id="chart-container" style="width:100%; height:400px;"></div>
-      </div>
-    </div>
-    <div class="card mt-4">
       <div class="card-body">
         <div class="bg-white p-3 mb-3">
           <div class="table-responsive data-graph-table">
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">Fats:</th>
-                  <td class="cl-warning">2.5%</td>
+                  <th scope="col">Energy:</th>
+                  <td *ngFor="let product of products; let i = index" class="table-content"
+                    [ngStyle]="{'color': productColors[i]}">{{product.energy}} %</td>
+                  <!-- <td class="table-content">2.5%</td>
                   <td class="cl-blue">2.4%</td>
                   <td class="cl-success">2.3%</td>
-                  <td class="cl-yellow">1.5%</td>
+                  <td class="cl-yellow">1.5%</td> -->
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <th scope="row">Proteins:</th>
-                  <td class="cl-warning">35%</td>
-                  <td class="cl-blue">30%</td>
-                  <td class="cl-success">25%</td>
-                  <td class="cl-yellow">20%</td>
+                  <td *ngFor="let product of products; let i = index" class="table-content"
+                    [ngStyle]="{'color': productColors[i]}">{{product.protein}}%</td>
+
                 </tr>
                 <tr>
-                  <th scope="row">Carbs:</th>
-                  <td class="cl-warning">38%</td>
-                  <td class="cl-blue">42%</td>
-                  <td class="cl-success">40%</td>
-                  <td class="cl-yellow">30%</td>
+                  <th scope="row">Sugar:</th>
+                  <td *ngFor="let product of products; let i = index" class="table-content"
+                    [ngStyle]="{'color': productColors[i]}">{{product.sugar || 0}}%</td>
                 </tr>
                 <tr>
-                  <th scope="row">Energy:</th>
-                  <td class="cl-warning">10%</td>
-                  <td class="cl-blue">5%</td>
-                  <td class="cl-success">8%</td>
-                  <td class="cl-yellow">15%</td>
+                  <th scope="row">Carbohydrates:</th>
+                  <td *ngFor="let product of products; let i = index" class="table-content"
+                    [ngStyle]="{'color': productColors[i]}">{{product.Carbohydrates || 0}}%</td>
+                </tr>
+                <tr>
+                  <th scope="row">Calcium:</th>
+                  <td *ngFor="let product of products; let i = index" class="table-content"
+                    [ngStyle]="{'color': productColors[i]}">{{product.calcium || 0}}%</td>
+                </tr>
+
+                <tr>
+                  <th scope="row">Fiber:</th>
+                  <td *ngFor="let product of products; let i = index" class="table-content"
+                    [ngStyle]="{'color': productColors[i]}">{{product.fiber || 0}}%</td>
+                </tr>
+                <tr>
+                  <th scope="row">Saturated Fat:</th>
+                  <td *ngFor="let product of products; let i = index" class="table-content"
+                    [ngStyle]="{'color': productColors[i]}">{{product.saturated_fat || 0}}%</td>
+                </tr>
+                <tr>
+                  <th scope="row">Trans Fat:</th>
+                  <td *ngFor="let product of products; let i = index" class="table-content"
+                    [ngStyle]="{'color': productColors[i]}">{{product.trans_fat || 0}}%</td>
+                </tr>
+                <tr>
+                  <th scope="row">Cholesterol:</th>
+                  <td *ngFor="let product of products; let i = index" class="table-content"
+                    [ngStyle]="{'color': productColors[i]}">{{product.cholesterol || 0}}%</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="card mt-4">
+      <h4 class="text-center theme_color pt-3 font-weight-bold">Nutrition Information</h4>
+      <div class="card-body">
+        <div id="chart-container" style="width:100%; height:400px;"></div>
       </div>
     </div>
   </div>

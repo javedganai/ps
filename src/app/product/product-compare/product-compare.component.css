@@ -75,8 +75,10 @@
   border-top: 0;
   border-bottom: 1px solid rgba(59, 59, 59, 0.5);
   font-size: 16px;
-  min-width: 150px;
-  padding: 16px;
+  padding: 16px 4px;
+}
+.data-graph-table th {
+  min-width: 90px;
 }
 
 .cl-warning {
@@ -154,4 +156,53 @@
 
 .tooltip-txt {
   position: relative;
+}
+
+.card-container-box {
+  padding: 0 10px;
+}
+.card-container-box .card-body {
+  padding: 0px;
+}
+
+.label {
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  margin-top: 5px;
+  color: white;
+  background: #fca420;
+}
+
+@media (min-width: 768px) {
+  .card-container-box {
+    padding: 20px 50px;
+  }
+  .card-container-box .card-body {
+    padding: 20px;
+  }
+  .data-graph-table th, .data-graph-table td {
+    min-width: 150px;
+    padding: 12px !important;
+  }
+}
+@media (max-width: 767px) {
+  .box--fluid {
+    padding: 20px 25px;
+  }
+  .box--fluid .circle {
+    width: 120px;
+    height: 120px;
+  }
+  .box--fluid .cross-icon {
+    z-index: 9;
+  }
+  .col-xs-6 {
+    width: 50%;
+    max-width: 50%;
+    padding-bottom: 20px;
+  }
+  .xs-auto {
+    width: auto !important;
+  }
 }

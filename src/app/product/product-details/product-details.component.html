@@ -15,13 +15,12 @@
                   <p class="card-text text-muted">{{prod.product_name}}</p>
                 </div>
                 <div class="card-body d-flex justify-content-end align-items-end">
-                  <img
-                    [src]="prod.veg_nonveg_category === 'veg' ? 'assets/images/veg.png' : 'assets/images/non-veg.png'"
-                    class="type-image mr-3" alt="Product Type" style="width: 50px;">
-
-                  <span class="label mb-1"
-                    [ngClass]="{ 'badge-halal': prod.lifestyle_category_id == 1, 'badge-nonhalal': prod.lifestyle_category_id == 2 }">
-                    {{ prod.lifestyle_category_id == 1 ? 'Halaal' : 'Non-Halaal' }}</span>
+                  <img [src]="s3url+prod.lifeStyleCategory?.image || 'assets/images/default-lifestyle.png'"
+                    class="type-image mr-1" alt="{{ prod.lifeStyleCategory?.life_style_category_name }}"
+                    style="width: 50px; height: 50px;" />
+                  <span class="label mb-1" style="font-size: 16px;">
+                    {{ prod.lifeStyleCategory?.life_style_category_name || 'Unknown Lifestyle' }}
+                  </span>
                 </div>
               </div>
               <hr>
@@ -31,7 +30,7 @@
               </div>
               <div class="card-body m-0 p-0 pt-4">
                 <h5 class="card-subtitle mb-2 theme-color2 font-weight-bold">Food Category</h5>
-                <p class="card-text">{{prod.category}}</p>
+                <p class="card-text">{{ prod.category_name }}</p>
               </div>
 
               <div class="card-body m-0 p-0 pt-4">
@@ -132,53 +131,61 @@
 
         </div>
 
-        <div class="container">
+        <div class="">
           <div class="row justify-content-center">
             <!-- Display the products -->
             <div *ngFor="let product of similarproducts" class="col-lg-2 mb-4 pt-4">
-              <div class="card bg-white text-center border-0">
-                <img [src]="s3url + product.image" class="card-img-top mt-1" alt="Product Image" style="width:100px" />
+              <div class="cards text-center border-0">
+                <!-- Top Label (Promotion Type or Category) -->
+                <!-- <div *ngIf="isKeyPresent(product, 'promotion_type')" class="promotion-type">
+                  {{ product.promotion_type }}
+                </div> -->
+                <img [src]="s3url + product.image" class="card-img-top mt-1" alt="Product Image"
+                  style="width: 100px; height: 100px; object-fit: cover;" (click)="handleReadMore(product)" />
                 <div class="card-body" style="padding: 5px;">
                   <div class="row">
                     <div class="card-body d-flex justify-content-center align-items-center m-0 p-0">
                       <img
-                        [src]="product.veg_nonveg_category === 'veg' ? 'assets/images/veg.png' : 'assets/images/non-veg.png'"
-                        class="type-image mr-3" alt="Product Type" style="width: 32px" />
-                      <span class="label badge-halal mb-1">
-                        {{ product.lifestyle_category_name || 'Category' }}
+                        [src]="product.veg_nonveg_category === 'Veg' ? 'assets/images/veg.png' : 'assets/images/non-veg.png'"
+                        class="type-image mr-3" alt="Product Type" style="width: 32px;" />
+                      <span class="label mb-1">
+                        {{ product.lifeStyleCategory.life_style_category_name || 'Unknown Category' }}
                       </span>
                     </div>
                   </div>
                 </div>
-                <div class="mt-2">
+                <div class="mt-2" style="cursor: pointer;" (click)="handleReadMore(product)">
                   <h5 class="text-center">{{ product.product_name }}</h5>
-                  <p class="text-center">{{ getDescriptionWithFallback(product.description)}}</p>
-                  <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
-                    <button class="btn mb-2" [ngClass]="getButtonClass(product)" [disabled]="getButtonDisabled()"
-                      (click)="navigateToComparePage()" style="font-size: 20px;">
-                      Compare
-                    </button>
-                    <input type="checkbox" id="custom-checkbox-{{ product.id }}" [checked]="isSelected(product)"
-                      (change)="toggleSelection(product)" style="display: none;" />
-
-                    <label for="custom-checkbox-{{ product.id }}" class="custom-checkbox-label"
-                      [class.selected]="isSelected(product)" style="display: inline-block; width: 24px; height: 24px;
-                              border-radius: 50%; border: 2px solid #333;
-                              background: #fff; text-align: center;
-                              line-height: 24px; cursor: pointer;">
-                      <span *ngIf="isSelected(product)" style="color: #333; font-weight: bold;">&#10003;</span>
-                    </label>
-
-                  </div>
+                  <p class="text-center" [ngStyle]="{ 'font-size': '12px' }">
+                    {{ getTruncatedDescription(product.description) }}
+                    <span *ngIf="shouldShowReadMore(product.description)">
+                      <a class="text-dark">
+                        <b>Read more</b>
+                      </a>
+                    </span>
+                  </p>
+                </div>
+                <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
+                  <button class="btn mb-2" [ngClass]="getButtonClass(product)" [disabled]="getButtonDisabled()"
+                    (click)="navigateToComparePage()" style="font-size: 20px;">
+                    Compare
+                  </button>
+                  <input type="checkbox" id="custom-checkbox-{{ product.id }}" [checked]="isSelected(product)"
+                    (change)="toggleSelection(product)" style="display: none;" />
+                  <label for="custom-checkbox-{{ product.id }}" class="custom-checkbox-label mb-0"
+                    [class.selected]="isSelected(product)"
+                    style="display: inline-block; width: 24px; height: 24px; border-radius: 50%; border: 2px solid #333; background: #fff; text-align: center; line-height: 24px; cursor: pointer;">
+                    <span *ngIf="isSelected(product)" style="color: #333; font-weight: bold;">&#10003;</span>
+                  </label>
                 </div>
               </div>
             </div>
           </div>
+          <!-- Loading Spinner -->
           <div *ngIf="isSimilarLoading" class="text-center my-4">
             <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
           </div>
         </div>
-
       </div>
     </div>
   </div>

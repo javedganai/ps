@@ -54,7 +54,7 @@ export class ProductDetailsComponent implements OnInit {
   feedbackMessage: string = '';
   deleteCommentLoading = false;
   deletingCommentId: number | null = null;
-  userId: any = sessionStorage.getItem('userId');
+  userId: any = localStorage.getItem('userId');
   s3url = 'https://poornasatya.s3.amazonaws.com/';
   constructor(
     private route: ActivatedRoute,
@@ -85,7 +85,6 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   getDescriptionWithFallback(description: string | undefined): string {
-    console.log('description', description);
     if (description && description.trim().length > 0) {
       return description.length > 50 ? description.slice(0, 50) : description;
     } else {
@@ -109,7 +108,6 @@ export class ProductDetailsComponent implements OnInit {
       .subscribe({
         next: (response: any) => {
           if (response.status === 200 && response.data) {
-            console.log(response);
             this.similarproducts = [...this.similarproducts, ...response.data];
             this.totalRecords = response.totalRecords || 0;
             this.offsetSimilar += this.limitSimilar;
@@ -117,7 +115,6 @@ export class ProductDetailsComponent implements OnInit {
           this.isSimilarLoading = false;
         },
         error: (error) => {
-          console.error('Error loading products:', error);
           this.isSimilarLoading = false;
         },
       });
@@ -138,14 +135,41 @@ export class ProductDetailsComponent implements OnInit {
     });
   }
 
+  categoryMap: { [key: number]: string } = {};
+
+  loadCategories(callback: () => void): void {
+    this.sharedService.getFilterCategories().subscribe({
+      next: (response: any) => {
+        if (response.status === 200 && response.data) {
+          response.data.forEach((cat: any) => {
+            this.categoryMap[cat.id] = cat.category_name;
+          });
+          callback();
+        } else {
+          this.toastr.error('Error fetching category details.');
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching category details:', error);
+        this.toastr.error('Error fetching category details.');
+      },
+    });
+  }
+
   loadProductDetails(): void {
     this.loaderService.showLoader();
     this.sharedService.getProductDetails(this.productId).subscribe({
       next: (response: any) => {
-        if (response.status === 200) {
+        if (response.status === 200 && Array.isArray(response.data)) {
           this.product = response.data;
+
+          this.loadCategories(() => {
+            this.product.forEach((prod: any) => {
+              prod.category_name = this.categoryMap[prod.product_category_id] || 'Unknown Category';
+            });
+          });
         } else {
-          console.error('Error fetching product details:', response.message);
+          this.toastr.error('Error fetching product details.');
         }
         this.loaderService.hideLoader();
       },
@@ -270,60 +294,8 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   isLoggedIn(): boolean {
-    const userId = sessionStorage.getItem('userId'); // Check if a userId is stored
+    const userId = localStorage.getItem('userId'); // Check if a userId is stored
     return !!userId; // Return true if logged in, false otherwise
-  }
-
-  navigateToComparePage(): void {
-    if (!this.isLoggedIn()) {
-      this.toastr.warning('Please log in to compare products.'); // Show warning if not logged in
-      return; // Prevent navigation if not logged in
-    }
-
-    const userId = sessionStorage.getItem('userId');
-    if (
-      this.selectedProducts.length >= 2 &&
-      this.selectedProducts.length <= 5
-    ) {
-      const productIds = this.selectedProducts.map((product) => product.id);
-      const url = `/product-comparison/${userId}?productIds=${JSON.stringify(
-        productIds
-      )}`;
-      this.router.navigateByUrl(url);
-    } else {
-      this.toastr.error('Select between 2 and 5 products to compare.');
-    }
-  }
-
-  getButtonDisabled(): boolean {
-    const selectedCount = this.selectedProducts.length;
-    return selectedCount < 2 || selectedCount > 5; // Disable when out of range
-  }
-
-  toggleSelection(product: any): void {
-    if (!this.isLoggedIn()) {
-      this.toastr.warning('Please log in to compare products.'); // Show warning if not logged in
-      return; // Prevent further action
-    }
-
-    const productId = product.id;
-    const index = this.selectedProducts.findIndex((p) => p.id === productId);
-
-    if (index === -1) {
-      if (this.selectedProducts.length < 5) {
-        this.selectedProducts.push(product);
-      } else {
-        this.toastr.error(
-          'You can select a maximum of 5 products for comparison.'
-        );
-      }
-    } else {
-      this.selectedProducts.splice(index, 1);
-    }
-
-    if (this.selectedProducts.length < 2) {
-      this.toastr.warning('Select at least 2 products for comparison.');
-    }
   }
 
   // addComment(): void {
@@ -354,7 +326,6 @@ export class ProductDetailsComponent implements OnInit {
 
   deleteComment(commentId: number): void {
     const comment = this.comments.find((c) => c.id === commentId);
-    console.log(this.userId, comment.user_id);
     if (comment?.user_id != this.userId) {
       this.toastr.error(
         "You can't delete someone else's comment.",
@@ -400,7 +371,6 @@ export class ProductDetailsComponent implements OnInit {
         },
         error: (error) => {
           this.toastr.error('Error submitting rating.', 'Error');
-          console.error('Error:', error);
           this.ratingLoading = false;
         },
         complete: () => {
@@ -441,7 +411,6 @@ export class ProductDetailsComponent implements OnInit {
         next: (response: any) => {
           if (response.status === 200) {
             this.comments = this.comments.concat(response.data); // Append new comments
-            console.log(this.comments, 'enter');
             this.offset += response.data.length; // Update the offset for pagination
             if (response.data.length < this.limit) {
               this.allCommentsLoaded = true; // If fewer than the limit, assume all comments are loaded
@@ -451,7 +420,6 @@ export class ProductDetailsComponent implements OnInit {
           }
         },
         error: (error) => {
-          console.error('Error fetching comments:', error);
           this.toastr.error('Error fetching comments.', 'Error');
         },
         complete: () => {
@@ -468,13 +436,100 @@ export class ProductDetailsComponent implements OnInit {
     }
   }
 
-  getButtonClass(product: any): string {
-    return this.isSelected(product)
-      ? 'custom-button-selected'
-      : 'custom-button-default'; // Apply custom class for button
+  toggleSelection(product: any): void {
+    const productId = product.product_id || product.id;
+    const index = this.selectedProducts.findIndex((p) => p.product_id === productId || p.id === productId);
+
+    if (index === -1) {
+      if (this.selectedProducts.length < 5) {
+        this.selectedProducts.push(product);
+      } else {
+        this.toastr.error('You can select a maximum of 5 products for comparison.');
+      }
+    } else {
+      this.selectedProducts.splice(index, 1);
+    }
+
+    if (this.selectedProducts.length < 2 && this.selectedProducts.length > 0) {
+      this.toastr.warning('Select at least 2 products for comparison.');
+    }
   }
 
   isSelected(product: any): boolean {
-    return this.selectedProducts.some((p) => p.id === product.id);
+    const productId = product.product_id || product.id;
+    return this.selectedProducts.some((p) => p.product_id === productId || p.id === productId);
   }
+
+  navigateToComparePage(): void {
+    if (this.selectedProducts.length < 2) {
+      this.toastr.warning('Select at least 2 products for comparison.');
+      return;
+    }
+
+    const userId = localStorage.getItem('userId');
+    const productIds = this.selectedProducts.map((product) => product.product_id || product.id);
+    const url = `/product-comparison/${userId}?productIds=${JSON.stringify(productIds)}`;
+    this.router.navigateByUrl(url);
+  }
+
+  getButtonClass(product: any): string {
+    return this.isSelected(product)
+      ? 'custom-button-selected'
+      : 'custom-button-default';
+  }
+
+  getButtonDisabled(): boolean {
+    const selectedCount = this.selectedProducts.length;
+    return selectedCount < 2 || selectedCount > 5;
+  }
+
+private readonly DESCRIPTION_LIMIT = 50;
+
+getTruncatedDescription(description: string): string {
+  return description.length > this.DESCRIPTION_LIMIT
+    ? description.slice(0, this.DESCRIPTION_LIMIT) + '...'
+    : description;
+}
+
+shouldShowReadMore(description: string): boolean {
+  return description.length > this.DESCRIPTION_LIMIT;
+}
+
+handleReadMore(product: any): void {
+  // Update the route with the product ID
+  this.router.navigate([], {
+    queryParams: { id: product.id },
+    queryParamsHandling: 'merge',
+  });
+
+  // Load the new product details
+  this.loadProductDetailsById(product.id);
+}
+
+loadProductDetailsById(productId: number): void {
+  this.loaderService.showLoader();
+  this.sharedService.getProductDetails(productId).subscribe({
+    next: (response: any) => {
+      if (response.status === 200 && response.data) {
+        this.product = response.data;
+
+        // Fetch and map categories dynamically
+        this.loadCategories(() => {
+          this.product.forEach((prod: any) => {
+            prod.category_name =
+              this.categoryMap[prod.product_category_id] || 'Unknown Category';
+          });
+        });
+      } else {
+        this.toastr.error('Error fetching product details.');
+      }
+      this.loaderService.hideLoader();
+    },
+    error: (error) => {
+      console.error('Error fetching product details:', error);
+      this.loaderService.hideLoader();
+    },
+  });
+}
+
 }

@@ -24,8 +24,8 @@ export class SharedService {
     userId: string | null;
   } {
     // Check if token is present in session storage
-    const token = sessionStorage.getItem('token');
-    const userId = sessionStorage.getItem('userId');
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
     const isLoggedIn = !!token;
     return { isLoggedIn, token, userId };
   }
@@ -56,8 +56,8 @@ export class SharedService {
   setLoggedInStatus(status: boolean): void {
     this.isLoggedInSubject.next({
       isLoggedIn: status,
-      token: sessionStorage.getItem('token'),
-      userId: sessionStorage.getItem('userId'),
+      token: localStorage.getItem('token'),
+      userId: localStorage.getItem('userId'),
     });
   }
 

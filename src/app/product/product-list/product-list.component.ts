@@ -56,27 +56,25 @@ export class ProductListComponent implements OnInit {
     this.fetchBrandFilters();
 
     this.activatedRoute.queryParams.subscribe((params) => {
-      this.lifestyleId = +params['lifestyleId']; // Convert to number
+      this.lifestyleId = +params['lifestyleId'];
       if (this.lifestyleId) {
-        console.log('Lifestyle ID (from ngOnInit):', this.lifestyleId); // Debugging
         this.loadProducts(true);
       }
     });
-    //console.log(this.searchQuery);
     this.searchQuery.setValue('');
     this.homeSearch();
     this.searchQuery.valueChanges
-      .pipe(debounceTime(300), distinctUntilChanged()) // Avoid duplicate calls
+      .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe((searchTerm: string) => {
         if (searchTerm.trim()) {
-          this.fetchAutosuggestions(searchTerm.trim()); // Autosuggestion fetch
+          this.fetchAutosuggestions(searchTerm.trim());
         }
       });
     this.loadProducts(true);
   }
 
   isLoggedIn(): boolean {
-    const userId = sessionStorage.getItem('userId'); // Check if a userId is stored
+    const userId = localStorage.getItem('userId'); // Check if a userId is stored
     return !!userId; // Return true if logged in, false otherwise
   }
 
@@ -84,7 +82,7 @@ export class ProductListComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params) => {
       const search = params['search'];
       const productId = params['productId']
-      
+
        // Retrieve the search parameter from the URL
       if (search) {
         this.shouldReloadProducts=true
@@ -123,8 +121,7 @@ export class ProductListComponent implements OnInit {
                 distinctProduct.push(value);
               }
             });
-            console.log('distinctProduct', distinctProduct);
-            this.groupedSearchResults = distinctProduct; // Group by brand
+            this.groupedSearchResults = distinctProduct;
           }
         },
         error: (error) => {
@@ -134,7 +131,7 @@ export class ProductListComponent implements OnInit {
           this.loading = false;
         },
       });
-    }    
+    }
   }
 
   onSearchEnter(event: KeyboardEvent): void {
@@ -161,7 +158,7 @@ export class ProductListComponent implements OnInit {
       this.toastr.warning('Please log in to search for products.'); // Show warning if not logged in
       return;
     }
-    if (this.shouldReloadProducts && !this.loading && count!=10) { 
+    if (this.shouldReloadProducts && !this.loading && count!=10) {
       this.sharedService.setSearchCount(count+1)
       this.loading = true;
       this.sharedService
@@ -278,7 +275,7 @@ export class ProductListComponent implements OnInit {
       return; // Prevent navigation if not logged in
     }
 
-    const userId = sessionStorage.getItem('userId');
+    const userId = localStorage.getItem('userId');
     if (
       this.selectedProducts.length >= 2 &&
       this.selectedProducts.length <= 5
@@ -407,7 +404,6 @@ export class ProductListComponent implements OnInit {
     }
   }
   viewProductDetails(productId: number,productCategoryId:number): void {
-    console.log("productCategoryId",productCategoryId)
     if (this.isLoggedIn()) {
       this.router.navigate(['/productDetails', productId], { queryParams: { productCategoryId: productCategoryId } });
     } else {
@@ -422,9 +418,9 @@ export class ProductListComponent implements OnInit {
   //   else{
   //     this.toastr.warning('Please log in to view product details.');
   //   }
-    
+
   // }
-  
+
 
   // navigateToProductPage(searchTerm: string,productId?:any): vo id {
   //   this.router.navigate(['/productsData'], {
@@ -565,11 +561,9 @@ export class ProductListComponent implements OnInit {
     //   brand: [],
     //   lifestyle: [], // Initialize lifestyle array
     // };
-    console.log(this.categories);
     this.callCommonFilters();
     // this.categories.forEach((category) => {
     //   if (category.checked) {
-    //     console.log(category);
     //     filterParams.productcategory.push(category.id); // Add category id to productcategory array if category is checked
     //   }
     //   console.log(filterParams);
@@ -610,7 +604,6 @@ export class ProductListComponent implements OnInit {
     // }
     if (this.searchQuery.value || this.searchTerm) {
       const searchTerm = this.searchQuery.value.trim();
-      console.log(searchTerm);
       this.sharedService
         .searchProducts(
           searchTerm || this.searchTerm,
@@ -621,7 +614,6 @@ export class ProductListComponent implements OnInit {
         .subscribe({
           next: (response: any) => {
             if (response.status === 200 && response.data.data) {
-              console.log('enter');
               if (resetOffset) {
                 this.products = response.data.data; // Replace products when filters are applied
                 this.noDataFound = this.products.length === 0;
@@ -652,7 +644,6 @@ export class ProductListComponent implements OnInit {
         .subscribe({
           next: (response: any) => {
             if (response.status === 200 && response.data.product) {
-              console.log('enter');
               if (resetOffset) {
                 this.products = response.data.product; // Replace products when filters are applied
                 this.noDataFound = this.products.length === 0;
@@ -813,7 +804,7 @@ export class ProductListComponent implements OnInit {
     } else {
       return 'No description available'; // Fallback message
     }
-  
+
   }
 
   // Function to determine if "Read more..." should be shown

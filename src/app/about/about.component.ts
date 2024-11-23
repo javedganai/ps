@@ -207,7 +207,6 @@ export class AboutComponent implements OnInit {
     this.sharedService.getFounderDetails().subscribe({
       next: (response) => {
         if (response.status === 200) {
-          console.log('data', response.data);
           this.slides = response.data.map((item: any) => ({
             name: item.name,
             imageUrl: `${this.s3Url}${item.image}`, // Include correct base URL

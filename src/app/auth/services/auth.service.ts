@@ -15,14 +15,14 @@ export class AuthService {
   private tokenUrl = 'https://api.instagram.com/oauth/access_token';
 
   private isLoggedIn = new BehaviorSubject<boolean>(
-    !!sessionStorage.getItem('userId')
+    !!localStorage.getItem('userId')
   );
   public isLoggedIn$ = this.isLoggedIn.asObservable();
 
   constructor(private http: HttpClient) {}
 
   checkLoggedIn(): boolean {
-    return !!sessionStorage.getItem('userId'); // Return true if there's a userId in session storage
+    return !!localStorage.getItem('userId'); // Return true if there's a userId in session storage
   }
 
   registerUser(mobileNumber: string): Observable<any> {

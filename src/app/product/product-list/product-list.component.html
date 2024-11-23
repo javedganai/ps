@@ -205,7 +205,7 @@
         </div>
         <!-- <div *ngIf="noDataFound">No data found</div> -->
         <div class="col-md-{{ !showFilters ? '3' : '4' }} mb-4" *ngFor="let product of products">
-          <div class="card cardHeight" >
+          <div class="card cardHeight">
             <div style="border-bottom-right-radius: 5px;
             border-top-left-radius: 5px;
             width: 80px;
@@ -215,17 +215,18 @@
             padding: 5px 10px;
             margin: 5px;" *ngIf="isKeyPresent(product, 'promotion_type')">
               {{ product.promotion_type }}
-             </div>
+            </div>
             <div class="card-body d-flex justify-content-between align-items-start pb-2" style="min-height: 150px; ">
               <!-- Set a minimum height to maintain consistency -->
 
               <div>
                 <img
-                  [src]="product.veg_nonveg_catgory === 'veg' ? 'assets/images/veg.png' : 'assets/images/non-veg.png'"
+                  [src]="product.veg_nonveg_catgory === 'Veg' ? 'assets/images/veg.png' : 'assets/images/non-veg.png'"
                   class="type-image" alt="Product Type" style="width: 32px;">
               </div>
 
-              <div class="d-flex flex-column align-items-start pl-4" (click)="viewProductDetails(product.product_id,product.product_category_id)">
+              <div class="d-flex flex-column align-items-start pl-4"
+                (click)="viewProductDetails(product.product_id,product.product_category_id)">
                 <ng-container>
                   <img [src]="s3url + product.product_image" class="product-image" alt="Product Image"
                     style="max-height: 150px; width: 100%; object-fit: cover;">
@@ -241,9 +242,11 @@
               </div>
             </div>
             <div class="card-body d-flex flex-column align-items-center">
-              <h5 (click)="viewProductDetails(product.product_id,product.product_category_id)" class="card-title text-center">{{ product.product_name }}</h5> <!-- Centered Title -->
+              <h5 (click)="viewProductDetails(product.product_id,product.product_category_id)"
+                class="card-title text-center">{{ product.product_name }}</h5> <!-- Centered Title -->
 
-              <p (click)="viewProductDetails(product.product_id,product.product_category_id)" class="card-text text-secondary text-center" [ngStyle]="{
+              <p (click)="viewProductDetails(product.product_id,product.product_category_id)"
+                class="card-text text-secondary text-center" [ngStyle]="{
                 'font-size': '13px',
                 'text-align': 'justify',
                 'white-space': 'pre-wrap',

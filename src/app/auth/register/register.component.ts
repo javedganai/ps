@@ -45,9 +45,6 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.sharedService.isLoggedIn$.subscribe(
       ({ isLoggedIn, token, userId }) => {
-        console.log('Is logged in register:', isLoggedIn);
-        console.log('Token register:', token);
-        console.log('User ID:', userId);
         this.isLoggedIn = isLoggedIn;
         this.token = token;
         this.userId = userId;
@@ -87,7 +84,6 @@ export class RegisterComponent implements OnInit {
     this.authService.getCategories().subscribe({
       next: (response: any) => {
         if (response.status === 200 && response.data) {
-          console.log(response);
           this.categories = response.data;
         } else {
           console.error('Error fetching categories:', response.message);
@@ -121,40 +117,45 @@ export class RegisterComponent implements OnInit {
 
   errorMessages: string = '';
   successMessage: string = '';
-  completeProfile() {
-    if (this.profileForm.valid && this.userId) {
-      const formData = {
-        fullName: this.profileForm.value.fullName,
-        email: this.profileForm.value.userEmail,
-        mobileNumber: this.profileForm.value.userMobile,
-        location: this.profileForm.value.userLocation,
-        instaId: this.profileForm.value.instagramId,
-        facebookId: this.profileForm.value.facebookId,
-        gmailId: this.profileForm.value.googleId,
-        areaOfInterest: this.selectedCategoryNames,
-        age: this.profileForm.value.ageGroup,
-        gender: this.profileForm.value.gender,
-        occupation: this.profileForm.value.occupation,
-        income: this.income.toString(),
-        userId: this.userId, // Include userId
-      };
+  isLoading: boolean = false;
 
-      this.authService.createProfile(formData).subscribe({
-        next: (res) => {
-          if (res.status === 200) {
-            this.successMessage = res.message;
-          }
-        },
-        error: (error) => {
-          this.errorMessages =
-            error?.error?.message ||
-            'An error occurred. Please try again later.';
-        },
-      });
-    } else {
-      this.errorMessages = 'Please fill in all required fields.';
-    }
+completeProfile() {
+  if (this.profileForm.valid && this.userId) {
+    this.isLoading = true;
+
+    const formData = {
+      fullName: this.profileForm.value.fullName,
+      email: this.profileForm.value.userEmail,
+      mobileNumber: this.profileForm.value.userMobile,
+      location: this.profileForm.value.userLocation,
+      instaId: this.profileForm.value.instagramId,
+      facebookId: this.profileForm.value.facebookId,
+      gmailId: this.profileForm.value.googleId,
+      areaOfInterest: this.selectedCategoryNames,
+      age: this.profileForm.value.ageGroup,
+      gender: this.profileForm.value.gender,
+      occupation: this.profileForm.value.occupation,
+      income: this.income ? this.income.toString() : '',
+      userId: this.userId,
+    };
+
+    this.authService.createProfile(formData).subscribe({
+      next: (res) => {
+        this.isLoading = false;
+        if (res.status === 200) {
+          this.successMessage = res.message;
+        }
+      },
+      error: (error) => {
+        this.isLoading = false;
+        this.errorMessages =
+          error?.error?.message || 'An error occurred. Please try again later.';
+      },
+    });
+  } else {
+    this.errorMessages = 'Please fill in all required fields.';
   }
+}
 
   profileData: any;
   fetchProfile(): void {

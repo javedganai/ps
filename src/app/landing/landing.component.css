@@ -882,4 +882,21 @@
     padding: 40px;
   }
 }
+@media (max-width: 767px) {
+  .xs--none {
+    /* display: none; */
+    opacity: 0;
+  }
+  .seacrh__box  {
+    margin-top: 0;
+  }
+  .head-xs-bg {
+    background-position: center;
+    background-image: url('../../assets/images/mob-landing-header.jpeg') !important;
+  }
+  .head-xs-bg .form_box_controller {
+    backdrop-filter: none;
+  }
+}
+
 /*NEW CSS*/

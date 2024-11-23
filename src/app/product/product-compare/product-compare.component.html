@@ -16,13 +16,13 @@
       </div>
     </div>
   </div>
-  <div class="container-fluid mt-4">
+  <div class="container-fluid box--fluid mt-4">
     <div class="row justify-content-center">
-      <div class="col-11">
+      <div class="col-12 col-md-11">
         <div class="d-flex justify-content-center">
           <div class="row">
             <!-- Loop through each product -->
-            <div class="col mb-4" *ngFor="let product of products; let i = index">
+            <div class="col col-xs-6 mb-4" *ngFor="let product of products; let i = index">
               <div class="card bg-transparent border-0">
                 <div class="d-flex justify-content-center align-items-center">
                   <i class="fas fa-times cross-icon" (click)="removeProduct(product.id)" style="cursor: pointer;"></i>
@@ -51,10 +51,10 @@
                   </button>
                   <div class="card-body d-flex flex-column justify-content-center align-items-center">
                     <!-- Display additional details -->
-                    <p class="text-center m-0 pt-2" style="width: 150px;">Product Description
+                    <p class="text-center m-0 pt-2 xs-auto" style="width: 150px;">Product Description
                     </p>
                     <div class="position-relative">
-                      <p class="text-center m-0 text-secondary clamp--two" style="width: 200px;">{{ product.description }}</p>
+                      <p class="text-center m-0 text-secondary clamp--two xs-auto" style="width: 200px;">{{ product.description }}</p>
                       <div class="text-center mt-1 font12">
                         <span class="d-inline tooltip-txt position-relative cursor-pointer">
                           <!-- <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 24 24" fill="none">

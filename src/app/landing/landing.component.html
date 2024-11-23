@@ -1,4 +1,4 @@
-<section class="ov-hidden pb-5 bg-transparent position-relative section-1 min80"
+<section class="ov-hidden pb-5 bg-transparent position-relative section-1 min80 head-xs-bg"
   style=" background-image: url('../../assets/images/ban-new.jpg');background-size: cover;">
   <div class="right--overlay" style="background-image: url('../../assets/images/right-gradient.svg');"></div>
   <div class="bottom--overlay" style="background-image: url('../../assets/images/bottom-gradient.svg');"></div>
@@ -8,23 +8,25 @@
     <div class="row d-flex align-items-center">
       <div class="col-md-6 col-xl-5 ms-md-auto">
         <div class="form_box_controller ms-auto">
-          <div class="scan_header">
-            <span class="bg-white">
-              <img src="../../assets/images/qr_code.png" alt="qr_code">
-            </span>
-            <div>
-              <p class="scan_header-title">
-                Scan the QR Code
-              </p>
-              <p class="scan_header-text">
-                To download the app
-              </p>
+          <div class="xs--none">
+            <div class="scan_header">
+              <span class="bg-white">
+                <img src="../../assets/images/qr_code.png" alt="qr_code">
+              </span>
+              <div>
+                <p class="scan_header-title">
+                  Scan the QR Code
+                </p>
+                <p class="scan_header-text">
+                  To download the app
+                </p>
+              </div>
             </div>
+            <h1 class="scan-one mt-4">{{banner?.heading}}</h1>
+            <p class="scan-text mt-3">
+              Explore Comprehensive Nutrition, Ingredients and Comparisons for Every Product You Love
+            </p>
           </div>
-          <h1 class="scan-one mt-4">{{banner?.heading}}</h1>
-          <p class="scan-text mt-3">
-            Explore Comprehensive Nutrition, Ingredients and Comparisons for Every Product You Love
-          </p>
           <div class="seacrh__box">
             <input type="text" class="form-control form-control-lg custom-placeholder"
               placeholder="Enter 3 or more word to search Products, Brands, or Categories" [formControl]="searchQuery"

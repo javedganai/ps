@@ -177,3 +177,24 @@
     padding: 16px;
   }
 }
+
+@media (max-width: 767px) {
+  .box--fluid {
+    padding: 20px 25px;
+  }
+  .box--fluid .circle {
+    width: 120px;
+    height: 120px;
+  }
+  .box--fluid .cross-icon {
+    z-index: 9;
+  }
+  .col-xs-6 {
+    width: 50%;
+    max-width: 50%;
+    padding-bottom: 20px;
+  }
+  .xs-auto {
+    width: auto !important;
+  }
+}
